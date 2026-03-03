@@ -1,0 +1,127 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ScaleCard from '../../components/ScaleCard.astro';
+import { getStaticLangPaths, getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { scales } from '../../scales/registry';
+
+export function getStaticPaths() {
+  return getStaticLangPaths();
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('index.title')} description={t('index.subtitle')}>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-badge">{lang === 'es' ? 'Neurología Clínica' : 'Neurologia Klinikoa'}</div>
+        <h1 class="hero-title">{t('index.title')}</h1>
+        <p class="hero-subtitle">{t('index.subtitle')}</p>
+      </div>
+    </section>
+
+    <section class="scales-section">
+      <h2 class="section-label">{t('index.select-scale')}</h2>
+      <div class="scale-grid">
+        {scales.map((scale) => (
+          <ScaleCard
+            title={t(scale.titleKey)}
+            subtitle={t(scale.subtitleKey)}
+            description={t(scale.descriptionKey)}
+            href={`/${lang}/scales/${scale.id}`}
+            badge={scale.badge}
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--s8) 0;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: var(--s8) 0 var(--s9);
+    animation: fadeUp 500ms ease both;
+  }
+
+  .hero-inner {
+    max-width: 600px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-teal-light);
+    background: var(--color-teal-dim);
+    border: 1px solid rgba(74, 173, 173, 0.2);
+    border-radius: var(--radius-sm);
+    padding: var(--s1) var(--s3);
+    margin-bottom: var(--s4);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    color: var(--color-text);
+    margin-bottom: var(--s4);
+    background: linear-gradient(135deg, var(--color-text) 40%, var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 500px;
+  }
+
+  /* ── Scales section ── */
+  .scales-section {
+    animation: fadeUp 500ms ease 100ms both;
+  }
+
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    margin-bottom: var(--s5);
+  }
+
+  .scale-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--s4);
+  }
+
+  .coming-soon {
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--s6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+  }
+
+  .coming-soon p {
+    font-size: 0.825rem;
+    color: var(--color-text-dim);
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+</style>

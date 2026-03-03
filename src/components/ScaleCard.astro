@@ -1,0 +1,144 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  description: string;
+  href: string;
+  badge?: string;
+}
+
+const { title, subtitle, description, href, badge } = Astro.props;
+---
+
+<a href={href} class="scale-card">
+  <div class="card-inner">
+    <div class="card-header">
+      <div class="card-titles">
+        <h3 class="card-title">{title}</h3>
+        <p class="card-subtitle">{subtitle}</p>
+      </div>
+      {badge && <span class="badge">{badge}</span>}
+    </div>
+    <p class="card-description">{description}</p>
+    <div class="card-footer">
+      <span class="cta">
+        Valorar
+        <svg class="arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <div class="card-glow" aria-hidden="true"></div>
+</a>
+
+<style>
+  .scale-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    transition: border-color var(--transition-med), transform var(--transition-med);
+  }
+
+  .scale-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .scale-card:hover .card-glow {
+    opacity: 1;
+  }
+
+  .scale-card:hover .cta {
+    color: var(--color-accent-light);
+    gap: var(--s3);
+  }
+
+  .card-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, var(--color-accent-dim) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-med);
+    pointer-events: none;
+  }
+
+  .card-inner {
+    position: relative;
+    z-index: 1;
+    padding: var(--s5) var(--s6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--s4);
+  }
+
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-bottom: var(--s1);
+  }
+
+  .card-subtitle {
+    font-size: 0.8rem;
+    color: var(--color-teal-light);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .badge {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: var(--s1) var(--s3);
+    background: var(--color-teal-dim);
+    color: var(--color-teal-light);
+    border: 1px solid rgba(74, 173, 173, 0.2);
+    border-radius: var(--radius-sm);
+  }
+
+  .card-description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .card-footer {
+    padding-top: var(--s2);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 0.01em;
+    transition: all var(--transition-fast);
+  }
+
+  .arrow {
+    transition: transform var(--transition-fast);
+  }
+
+  .scale-card:hover .arrow {
+    transform: translateX(3px);
+  }
+</style>

@@ -1,0 +1,21 @@
+{
+  "name": "neuro-scales",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@fontsource/dm-serif-display": "^5.2.8",
+    "@fontsource/libre-franklin": "^5.2.8",
+    "astro": "^5.17.1"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.18"
+  }
+}

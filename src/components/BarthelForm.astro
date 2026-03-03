@@ -1,0 +1,372 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { barthelIndex } from "../scales/barthel";
+import ScaleResultsCard from "./ScaleResultsCard.astro";
+import type { LevelInfo, Zone } from "./ScaleResultsCard.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const barthelLevels: LevelInfo[] = [
+  { key: 'independent', label: t('results.independent'), desc: t('results.independent.desc'), colorIndex: 0 },
+  { key: 'mild',        label: t('results.mild'),        desc: t('results.mild.desc'),        colorIndex: 1 },
+  { key: 'moderate',    label: t('results.moderate'),    desc: t('results.moderate.desc'),    colorIndex: 2 },
+  { key: 'severe',      label: t('results.severe'),      desc: t('results.severe.desc'),      colorIndex: 3 },
+  { key: 'total',       label: t('results.total'),       desc: t('results.total.desc'),       colorIndex: 4 },
+];
+
+const barthelZones: Zone[] = [
+  { from: 0,   to: 19,  colorIndex: 4, label: t('results.range.0') },
+  { from: 20,  to: 39,  colorIndex: 3, label: t('results.range.20') },
+  { from: 40,  to: 59,  colorIndex: 2, label: t('results.range.40') },
+  { from: 60,  to: 99,  colorIndex: 1, label: t('results.range.60') },
+  { from: 100, to: 100, colorIndex: 0, label: t('results.range.100') },
+];
+---
+
+<div class="barthel-wrapper">
+  <form id="barthel-form" novalidate>
+    <div class="progress-bar-wrap">
+      <p class="progress-info">
+        <span id="progress-count">0</span>&nbsp;{t("barthel.progress")}
+      </p>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="activities">
+      {
+        barthelIndex.activities.map((activity, idx) => (
+          <fieldset
+            class="activity-group"
+            style={`animation-delay: ${idx * 60}ms`}
+            data-activity={activity.id}
+          >
+            <legend class="activity-label">
+              <span class="activity-num">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              {t(activity.labelKey)}
+            </legend>
+            <div class="options">
+              {activity.options.map((opt) => (
+                <label class="option-label">
+                  <input
+                    type="radio"
+                    name={activity.id}
+                    value={String(opt.value)}
+                    class="option-radio"
+                  />
+                  <span class="option-card">
+                    <span class="option-score">{opt.value}</span>
+                    <span class="option-text">{t(opt.labelKey)}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))
+      }
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        id="calculate-btn"
+        class="btn-calculate"
+        disabled
+        aria-describedby="calculate-hint"
+      >
+        {t("barthel.calculate")}
+      </button>
+      <p id="calculate-hint" class="calculate-hint">
+        {t("barthel.calculate-hint")}
+      </p>
+    </div>
+  </form>
+</div>
+
+<ScaleResultsCard
+  maxScore={100}
+  maxLabel={t("results.max")}
+  scoreLabel={t("results.score")}
+  interpretationTitle={t("results.interpretation")}
+  rangesTitle={t("results.scale-ranges")}
+  retakeLabel={t("results.retake")}
+  backHref={`/${lang}`}
+  backLabel={t("results.back")}
+  levels={barthelLevels}
+  zones={barthelZones}
+  gaugeMarks={[0, 20, 40, 60, 100]}
+/>
+
+<script>
+  import { scoreBarthel, barthelIndex } from "../scales/barthel";
+
+  function initBarthelForm() {
+    const form = document.getElementById("barthel-form") as HTMLFormElement | null;
+    if (!form) return;
+
+    const calculateBtn = document.getElementById("calculate-btn") as HTMLButtonElement;
+    const calculateHint = document.getElementById("calculate-hint") as HTMLElement;
+    const progressCount = document.getElementById("progress-count") as HTMLElement;
+    const progressFill = document.getElementById("progress-fill") as HTMLElement;
+    const totalActivities = barthelIndex.activities.length;
+    const answers: Record<string, number> = {};
+
+    function getAnsweredCount(): number {
+      return Object.keys(answers).length;
+    }
+
+    function updateProgress() {
+      const count = getAnsweredCount();
+      const pct = (count / totalActivities) * 100;
+      progressCount.textContent = String(count);
+      progressFill.style.width = `${pct}%`;
+
+      if (count === totalActivities) {
+        calculateBtn.disabled = false;
+        calculateHint.hidden = true;
+      } else {
+        calculateBtn.disabled = true;
+        calculateHint.hidden = false;
+      }
+    }
+
+    form.addEventListener("change", (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.type === "radio") {
+        answers[input.name] = Number(input.value);
+        const fieldset = input.closest("fieldset");
+        fieldset?.querySelectorAll(".option-card").forEach((card) => {
+          card.classList.remove("selected");
+        });
+        input.parentElement?.querySelector(".option-card")?.classList.add("selected");
+        updateProgress();
+      }
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (getAnsweredCount() < totalActivities) return;
+
+      const result = scoreBarthel(answers);
+      form.hidden = true;
+      document.dispatchEvent(
+        new CustomEvent("scale:result", { detail: { score: result.score, level: result.level } })
+      );
+    });
+
+    document.addEventListener("scale:retake", () => {
+      form.reset();
+      Object.keys(answers).forEach((k) => delete answers[k]);
+      document.querySelectorAll(".option-card").forEach((c) => c.classList.remove("selected"));
+      updateProgress();
+      form.hidden = false;
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  initBarthelForm();
+  document.addEventListener("astro:after-swap", initBarthelForm);
+</script>
+
+<style>
+  .barthel-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--s6) 0 var(--s4);
+  }
+
+  /* ── Progress ── */
+  .progress-bar-wrap {
+    position: sticky;
+    top: 64px;
+    z-index: 50;
+    background: var(--color-header-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding: var(--s3) 0;
+    margin-bottom: var(--s7);
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    transition: background var(--transition-theme);
+  }
+
+  .progress-info {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--color-border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-teal), var(--color-accent));
+    border-radius: 99px;
+    transition: width var(--transition-med);
+  }
+
+  /* ── Activities ── */
+  .activities {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4);
+  }
+
+  .activity-group {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--s5);
+    background: var(--color-surface);
+    animation: fadeUp 400ms ease both;
+    transition: border-color var(--transition-fast);
+  }
+
+  .activity-group:focus-within {
+    border-color: var(--color-teal);
+  }
+
+  .activity-label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s3);
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--color-text);
+    margin-bottom: var(--s4);
+    width: 100%;
+  }
+
+  .activity-num {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-text-dim);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  /* ── Options ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+  }
+
+  .option-label {
+    display: block;
+    cursor: pointer;
+  }
+
+  .option-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .option-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s3);
+    padding: var(--s3) var(--s4);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+  }
+
+  .option-label:hover .option-card {
+    border-color: var(--color-border);
+    background: var(--color-surface-hover);
+  }
+
+  .option-card.selected {
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  .option-score {
+    flex-shrink: 0;
+    min-width: 28px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-dim);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 1px 6px;
+    text-align: center;
+    line-height: 1.6;
+    transition: all var(--transition-fast);
+  }
+
+  .option-card.selected .option-score {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  .option-text {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    transition: color var(--transition-fast);
+  }
+
+  .option-card.selected .option-text {
+    color: var(--color-text);
+  }
+
+  /* ── Submit ── */
+  .form-actions {
+    margin-top: var(--s7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s3);
+  }
+
+  .btn-calculate {
+    padding: var(--s3) var(--s7);
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-calculate:hover:not(:disabled) {
+    background: var(--color-accent-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-calculate:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .calculate-hint {
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+  }
+</style>

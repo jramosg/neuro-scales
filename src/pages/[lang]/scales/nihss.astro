@@ -1,0 +1,126 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import NIHSSForm from '../../../components/NIHSSForm.astro';
+import { getStaticLangPaths, getLangFromUrl, useTranslations } from '../../../i18n/utils';
+import { nihssIndex } from '../../../scales/nihss';
+
+export function getStaticPaths() {
+  return getStaticLangPaths();
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nihss.title')} description={t('nihss.description')}>
+  <div class="page">
+    <div class="page-header">
+      <a href={`/${lang}`} class="breadcrumb">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M9 2L4 7l5 5"/>
+        </svg>
+        {t('nav.home')}
+      </a>
+      <div class="header-content">
+        <div class="scale-meta">
+          <span class="scale-tag">NIHSS</span>
+          <span class="scale-activities">{nihssIndex.activities.length} {lang === 'es' ? 'ítems' : 'item'}</span>
+          <span class="scale-range">{lang === 'es' ? 'Puntuación 0–42' : 'Puntuazioa 0–42'}</span>
+        </div>
+        <h1 class="page-title">{t('nihss.title')}</h1>
+        <p class="page-subtitle">{t('nihss.subtitle')}</p>
+      </div>
+      <p class="instructions">{t('nihss.instructions')}</p>
+    </div>
+
+    <NIHSSForm />
+  </div>
+</Layout>
+
+<style>
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: var(--s6) 0;
+  }
+
+  .page-header {
+    padding-bottom: var(--s7);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--s6);
+    animation: fadeUp 400ms ease both;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--s5);
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb:hover {
+    color: var(--color-text);
+  }
+
+  .header-content {
+    margin-bottom: var(--s4);
+  }
+
+  .scale-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    margin-bottom: var(--s4);
+    flex-wrap: wrap;
+  }
+
+  .scale-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-light);
+    background: var(--color-accent-dim);
+    border: 1px solid rgba(212, 145, 58, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 2px 7px;
+  }
+
+  .scale-activities, .scale-range {
+    font-size: 0.775rem;
+    color: var(--color-text-dim);
+    letter-spacing: 0.01em;
+  }
+
+  .scale-activities::before, .scale-range::before {
+    content: '·';
+    margin-right: var(--s3);
+    color: var(--color-text-dim);
+  }
+
+  .page-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--color-text);
+    margin-bottom: var(--s2);
+  }
+
+  .page-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-accent-light);
+    font-weight: 500;
+  }
+
+  .instructions {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    padding: var(--s4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+</style>

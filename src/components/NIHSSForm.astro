@@ -1,0 +1,429 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { nihssIndex } from "../scales/nihss";
+import ScaleResultsCard from "./ScaleResultsCard.astro";
+import type { LevelInfo, Zone } from "./ScaleResultsCard.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const nihssLevels: LevelInfo[] = [
+  { key: 'normal',          label: t('nihss.result.normal'),          desc: t('nihss.result.normal.desc'),          colorIndex: 0 },
+  { key: 'mild',            label: t('nihss.result.mild'),            desc: t('nihss.result.mild.desc'),            colorIndex: 1 },
+  { key: 'moderate',        label: t('nihss.result.moderate'),        desc: t('nihss.result.moderate.desc'),        colorIndex: 2 },
+  { key: 'moderate_severe', label: t('nihss.result.moderate_severe'), desc: t('nihss.result.moderate_severe.desc'), colorIndex: 3 },
+  { key: 'severe',          label: t('nihss.result.severe'),          desc: t('nihss.result.severe.desc'),          colorIndex: 4 },
+];
+
+const nihssZones: Zone[] = [
+  { from: 0,  to: 0,  colorIndex: 0, label: t('nihss.results.range.normal') },
+  { from: 1,  to: 4,  colorIndex: 1, label: t('nihss.results.range.mild') },
+  { from: 5,  to: 15, colorIndex: 2, label: t('nihss.results.range.moderate') },
+  { from: 16, to: 20, colorIndex: 3, label: t('nihss.results.range.moderate_severe') },
+  { from: 21, to: 42, colorIndex: 4, label: t('nihss.results.range.severe') },
+];
+
+// Pairs: these IDs are the "right" side of a bilateral item pair
+const bilateralRight = new Set(['arm_right', 'leg_right']);
+// These are the "left" side (paired with the preceding right item)
+const bilateralLeft  = new Set(['arm_left', 'leg_left']);
+---
+
+<div class="nihss-wrapper">
+  <form id="nihss-form" novalidate>
+    <div class="progress-bar-wrap">
+      <p class="progress-info">
+        <span id="nihss-progress-count">0</span>&nbsp;{t("nihss.progress")}
+      </p>
+      <div class="progress-track">
+        <div class="progress-fill" id="nihss-progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="activities">
+      {nihssIndex.activities.map((activity, idx) => {
+        const isBilateralRight = bilateralRight.has(activity.id);
+        const isBilateralLeft  = bilateralLeft.has(activity.id);
+
+        return (
+          <fieldset
+            class={`activity-group${isBilateralRight ? ' bilateral-first' : ''}${isBilateralLeft ? ' bilateral-second' : ''}`}
+            style={`animation-delay: ${idx * 40}ms`}
+            data-activity={activity.id}
+          >
+            <legend class="activity-label">
+              <span class="activity-num">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              {t(activity.labelKey)}
+            </legend>
+
+            {activity.noteKey && (
+              <p class="activity-note">{t(activity.noteKey)}</p>
+            )}
+
+            <div class="options">
+              {activity.options.map((opt) => (
+                <label class={`option-label${opt.excluded ? ' option-label--na' : ''}`}>
+                  <input
+                    type="radio"
+                    name={activity.id}
+                    value={String(opt.value)}
+                    class="option-radio"
+                  />
+                  <span class={`option-card${opt.excluded ? ' option-card--na' : ''}`}>
+                    <span class="option-score">{opt.excluded ? 'N/A' : opt.value}</span>
+                    <span class="option-text">{t(opt.labelKey)}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        );
+      })}
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        id="nihss-calculate-btn"
+        class="btn-calculate"
+        disabled
+        aria-describedby="nihss-calculate-hint"
+      >
+        {t("nihss.calculate")}
+      </button>
+      <p id="nihss-calculate-hint" class="calculate-hint">
+        {t("nihss.calculate-hint")}
+      </p>
+    </div>
+  </form>
+</div>
+
+<ScaleResultsCard
+  maxScore={42}
+  maxLabel={t("nihss.results.max")}
+  scoreLabel={t("nihss.results.score")}
+  interpretationTitle={t("results.interpretation")}
+  rangesTitle={t("nihss.results.ranges")}
+  retakeLabel={t("results.retake")}
+  backHref={`/${lang}`}
+  backLabel={t("results.back")}
+  levels={nihssLevels}
+  zones={nihssZones}
+  gaugeMarks={[0, 4, 15, 20, 42]}
+/>
+
+<script>
+  import { scoreNIHSS, nihssIndex } from "../scales/nihss";
+
+  function initNIHSSForm() {
+    const form = document.getElementById("nihss-form") as HTMLFormElement | null;
+    if (!form) return;
+
+    const calculateBtn = document.getElementById("nihss-calculate-btn") as HTMLButtonElement;
+    const calculateHint = document.getElementById("nihss-calculate-hint") as HTMLElement;
+    const progressCount = document.getElementById("nihss-progress-count") as HTMLElement;
+    const progressFill = document.getElementById("nihss-progress-fill") as HTMLElement;
+    const totalActivities = nihssIndex.activities.length;
+    const answers: Record<string, number> = {};
+
+    function getAnsweredCount(): number {
+      return Object.keys(answers).length;
+    }
+
+    function updateProgress() {
+      const count = getAnsweredCount();
+      const pct = (count / totalActivities) * 100;
+      progressCount.textContent = String(count);
+      progressFill.style.width = `${pct}%`;
+
+      if (count === totalActivities) {
+        calculateBtn.disabled = false;
+        calculateHint.hidden = true;
+      } else {
+        calculateBtn.disabled = true;
+        calculateHint.hidden = false;
+      }
+    }
+
+    form.addEventListener("change", (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.type === "radio") {
+        answers[input.name] = Number(input.value);
+        const fieldset = input.closest("fieldset");
+        fieldset?.querySelectorAll(".option-card").forEach((card) => {
+          card.classList.remove("selected");
+        });
+        input.parentElement?.querySelector(".option-card")?.classList.add("selected");
+        updateProgress();
+      }
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (getAnsweredCount() < totalActivities) return;
+
+      const result = scoreNIHSS(answers);
+      form.hidden = true;
+      document.dispatchEvent(
+        new CustomEvent("scale:result", { detail: { score: result.score, level: result.level } })
+      );
+    });
+
+    document.addEventListener("scale:retake", () => {
+      form.reset();
+      Object.keys(answers).forEach((k) => delete answers[k]);
+      document.querySelectorAll(".option-card").forEach((c) => c.classList.remove("selected"));
+      updateProgress();
+      form.hidden = false;
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  initNIHSSForm();
+  document.addEventListener("astro:after-swap", initNIHSSForm);
+</script>
+
+<style>
+  .nihss-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--s6) 0 var(--s4);
+  }
+
+  /* ── Progress ── */
+  .progress-bar-wrap {
+    position: sticky;
+    top: 64px;
+    z-index: 50;
+    background: var(--color-header-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding: var(--s3) 0;
+    margin-bottom: var(--s7);
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    transition: background var(--transition-theme);
+  }
+
+  .progress-info {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--color-border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-teal), var(--color-accent));
+    border-radius: 99px;
+    transition: width var(--transition-med);
+  }
+
+  /* ── Activities ── */
+  .activities {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4);
+  }
+
+  .activity-group {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--s5);
+    background: var(--color-surface);
+    animation: fadeUp 400ms ease both;
+    transition: border-color var(--transition-fast);
+  }
+
+  .activity-group:focus-within {
+    border-color: var(--color-teal);
+  }
+
+  /* Bilateral items visually connected */
+  .activity-group.bilateral-first {
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
+    border-bottom-color: transparent;
+    margin-bottom: 0;
+  }
+
+  .activity-group.bilateral-second {
+    border-radius: var(--radius-sm) var(--radius-sm) var(--radius-lg) var(--radius-lg);
+    border-top: 1px dashed var(--color-border);
+    margin-top: 0;
+  }
+
+  .activity-label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s3);
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-text);
+    margin-bottom: var(--s2);
+    width: 100%;
+  }
+
+  .activity-num {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-text-dim);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .activity-note {
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: var(--s4);
+    padding-left: calc(var(--s3) + 28px); /* aligns under the label text */
+    border-left: 2px solid var(--color-border-subtle);
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  /* ── Options ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+  }
+
+  .option-label {
+    display: block;
+    cursor: pointer;
+  }
+
+  .option-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .option-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s3);
+    padding: var(--s3) var(--s4);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+  }
+
+  .option-label:hover .option-card {
+    border-color: var(--color-border);
+    background: var(--color-surface-hover);
+  }
+
+  .option-card.selected {
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  /* N/A option styling */
+  .option-card--na {
+    opacity: 0.55;
+    border-style: dashed;
+  }
+
+  .option-card--na.selected {
+    opacity: 1;
+    border-color: var(--color-text-dim);
+    background: var(--color-surface-hover);
+    border-style: solid;
+  }
+
+  .option-score {
+    flex-shrink: 0;
+    min-width: 28px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-dim);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 1px 6px;
+    text-align: center;
+    line-height: 1.6;
+    transition: all var(--transition-fast);
+  }
+
+  .option-card.selected .option-score {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  .option-card--na.selected .option-score {
+    color: var(--color-text-muted);
+    border-color: var(--color-text-dim);
+    background: var(--color-surface-hover);
+  }
+
+  .option-text {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    transition: color var(--transition-fast);
+  }
+
+  .option-card.selected .option-text {
+    color: var(--color-text);
+  }
+
+  /* ── Submit ── */
+  .form-actions {
+    margin-top: var(--s7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s3);
+  }
+
+  .btn-calculate {
+    padding: var(--s3) var(--s7);
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-calculate:hover:not(:disabled) {
+    background: var(--color-accent-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-calculate:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .calculate-hint {
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+  }
+</style>
