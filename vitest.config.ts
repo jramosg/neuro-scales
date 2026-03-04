@@ -1,11 +1,10 @@
 import { defineConfig } from 'vitest/config'
-import { resolve } from 'path'
 
 export default defineConfig({
   resolve: {
     alias: {
-      '@scales': resolve(__dirname, 'src/scales'),
-      '@i18n': resolve(__dirname, 'src/i18n'),
+      '@scales': new URL('src/scales', import.meta.url).pathname,
+      '@i18n': new URL('src/i18n', import.meta.url).pathname,
     },
   },
   test: {
