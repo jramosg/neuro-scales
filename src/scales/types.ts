@@ -38,6 +38,8 @@ export type StrokeSeverity =
   | 'moderate_severe'
   | 'severe'
 
+export type GCSSeverity = 'mild' | 'moderate' | 'severe'
+
 export interface ScaleResult {
   score: number
   maxScore: number

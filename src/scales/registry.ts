@@ -1,10 +1,11 @@
 import { barthelIndex } from './barthel'
 import { nihssIndex } from './nihss'
+import { gcsIndex } from './gcs'
 import type { ScaleDefinition } from './types'
 
 type IndexedScales = Record<string, ScaleDefinition>
 
-export const scales: ScaleDefinition[] = [barthelIndex, nihssIndex]
+export const scales: ScaleDefinition[] = [barthelIndex, nihssIndex, gcsIndex]
 
 const indexedScales: IndexedScales = scales.reduce((acc, scale) => {
   acc[scale.id] = scale

@@ -283,6 +283,60 @@ export const ui: Record<Langs, Record<string, string>> = {
     // Theme
     'theme.toggle': 'Cambiar tema',
     'footer.privacy': 'Los datos se procesan localmente y no se almacenan.',
+
+    // GCS scale meta
+    'gcs.title': 'Escala de Coma de Glasgow',
+    'gcs.subtitle': 'Evaluación del nivel de conciencia',
+    'gcs.description':
+      'Cuantifica el nivel de conciencia mediante 3 ítems (apertura ocular, respuesta verbal y motora). Clasifica el coma en leve (13–15), moderado (9–12) y grave (3–8).',
+    'gcs.instructions':
+      'Seleccione la mejor respuesta observada en cada categoría. A menor puntuación, mayor profundidad del coma.',
+    'gcs.progress': 'de 3 ítems valorados',
+    'gcs.calculate': 'Calcular puntuación GCS',
+    'gcs.calculate-hint': 'Complete las 3 categorías para calcular',
+
+    // 1. Apertura ocular
+    'gcs.eye_opening.label': '1. Apertura ocular',
+    'gcs.eye_opening.opt-4': 'Espontánea',
+    'gcs.eye_opening.opt-3': 'A órdenes verbales',
+    'gcs.eye_opening.opt-2': 'A estímulo doloroso',
+    'gcs.eye_opening.opt-1': 'Sin respuesta',
+
+    // 2. Respuesta verbal
+    'gcs.verbal.label': '2. Respuesta verbal',
+    'gcs.verbal.opt-5': 'Orientada',
+    'gcs.verbal.opt-4': 'Confusa',
+    'gcs.verbal.opt-3': 'Palabras inapropiadas',
+    'gcs.verbal.opt-2': 'Sonidos incomprensibles',
+    'gcs.verbal.opt-1': 'Sin respuesta',
+
+    // 3. Mejor respuesta motora
+    'gcs.motor.label': '3. Mejor respuesta motora',
+    'gcs.motor.opt-6': 'Obedece órdenes',
+    'gcs.motor.opt-5': 'Localiza el dolor',
+    'gcs.motor.opt-4': 'Retira al dolor',
+    'gcs.motor.opt-3': 'Flexión anormal',
+    'gcs.motor.opt-2': 'Respuesta en extensión',
+    'gcs.motor.opt-1': 'Sin movimiento',
+
+    // GCS result levels
+    'gcs.result.mild': 'Coma leve',
+    'gcs.result.mild.desc':
+      'Conciencia preservada o mínimamente alterada. Monitorizar estrechamente ante posible deterioro neurológico.',
+    'gcs.result.moderate': 'Coma moderado',
+    'gcs.result.moderate.desc':
+      'Alteración significativa del nivel de conciencia. Requiere vigilancia intensiva y estudio neurológico urgente.',
+    'gcs.result.severe': 'Coma grave',
+    'gcs.result.severe.desc':
+      'Profunda alteración del nivel de conciencia. Priorizar soporte vital y manejo en unidad de cuidados intensivos.',
+
+    // GCS results display
+    'gcs.results.max': 'de 15 puntos',
+    'gcs.results.score': 'Puntuación GCS',
+    'gcs.results.ranges': 'Rangos de severidad',
+    'gcs.results.range.mild': '13–15 — Coma leve',
+    'gcs.results.range.moderate': '9–12 — Coma moderado',
+    'gcs.results.range.severe': '3–8 — Coma grave',
   },
 
   eu: {
@@ -575,5 +629,59 @@ export const ui: Record<Langs, Record<string, string>> = {
     // Theme
     'theme.toggle': 'Itxura aldatu',
     'footer.privacy': 'Datuak lokalean prozesatzen dira eta ez dira gordetzen.',
+
+    // GCS scale meta
+    'gcs.title': 'Glasgow Koma Eskala',
+    'gcs.subtitle': 'Kontzientzia mailaren ebaluazioa',
+    'gcs.description':
+      'Kontzientzia maila 3 itemen bidez kuantifikatzen du (begi irekiera, ahozko eta motor erantzuna). Koma arina (13–15), moderatua (9–12) eta larria (3–8) bereizten ditu.',
+    'gcs.instructions':
+      'Hautatu kategoria bakoitzean behatutako erantzun onena. Zenbat eta txikiagoa puntuazioa, orduan eta sakonagoa koma.',
+    'gcs.progress': '3 itemetatik baloratuta',
+    'gcs.calculate': 'GCS puntuazioa kalkulatu',
+    'gcs.calculate-hint': 'Bete 3 kategoriak kalkulatzeko',
+
+    // 1. Begi irekiera
+    'gcs.eye_opening.label': '1. Begi irekiera',
+    'gcs.eye_opening.opt-4': 'Espontaneoa',
+    'gcs.eye_opening.opt-3': 'Ahozko aginduei',
+    'gcs.eye_opening.opt-2': 'Estimulu mingarriari',
+    'gcs.eye_opening.opt-1': 'Erantzunik ez',
+
+    // 2. Ahozko erantzuna
+    'gcs.verbal.label': '2. Ahozko erantzuna',
+    'gcs.verbal.opt-5': 'Orientatua',
+    'gcs.verbal.opt-4': 'Nahastua',
+    'gcs.verbal.opt-3': 'Hitz desegokiak',
+    'gcs.verbal.opt-2': 'Soinu ulertezinak',
+    'gcs.verbal.opt-1': 'Erantzunik ez',
+
+    // 3. Erantzun motor onena
+    'gcs.motor.label': '3. Erantzun motor onena',
+    'gcs.motor.opt-6': 'Aginduak betetzen ditu',
+    'gcs.motor.opt-5': 'Mina lokalizatzen du',
+    'gcs.motor.opt-4': 'Minari ekiditen dio',
+    'gcs.motor.opt-3': 'Flexio anormala',
+    'gcs.motor.opt-2': 'Luzapen erantzuna',
+    'gcs.motor.opt-1': 'Mugimendurik ez',
+
+    // GCS emaitza mailak
+    'gcs.result.mild': 'Koma arina',
+    'gcs.result.mild.desc':
+      'Kontzientzia mantendua edo gutxienez aldatua. Jarraipen estua egin ondoriozko okerreraketari begira.',
+    'gcs.result.moderate': 'Koma moderatua',
+    'gcs.result.moderate.desc':
+      'Kontzientzia mailaren aldaketa esanguratsua. Zaintza intentsiboa eta azterlan neurologiko urgentea behar ditu.',
+    'gcs.result.severe': 'Koma larria',
+    'gcs.result.severe.desc':
+      'Kontzientzia mailaren aldaketa sakona. Bizi-laguntza eta zainketa intentsiboko unitatean kudeaketa lehenetsi.',
+
+    // GCS emaitzen erakustea
+    'gcs.results.max': '15 puntutik',
+    'gcs.results.score': 'GCS Puntuazioa',
+    'gcs.results.ranges': 'Larritasun tarteak',
+    'gcs.results.range.mild': '13–15 — Koma arina',
+    'gcs.results.range.moderate': '9–12 — Koma moderatua',
+    'gcs.results.range.severe': '3–8 — Koma larria',
   },
 }
