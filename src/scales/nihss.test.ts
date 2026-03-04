@@ -1,38 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { nihssIndex, interpretNIHSS, scoreNIHSS } from './nihss'
-import { ui, type Langs } from '../i18n/ui'
+import { buildLabelIndex, createByLabel } from './test-utils'
 
-/**
- * Pre-built index: activityId → lang → label → value
- * Avoids repeated linear scans on every byLabel() call.
- */
-const labelIndex: Record<
-  string,
-  Partial<Record<Langs, Record<string, number>>>
-> = {}
-for (const activity of nihssIndex.activities) {
-  labelIndex[activity.id] = {}
-  for (const lang of Object.keys(ui) as Langs[]) {
-    const dict = ui[lang]
-    labelIndex[activity.id][lang] = Object.fromEntries(
-      activity.options.map((o) => [dict[o.labelKey], o.value])
-    )
-  }
-}
-
-/** Resolve a translated label string to its numeric option value for a given activity. */
-function byLabel(
-  activityId: string,
-  label: string,
-  lang: Langs = 'es'
-): number {
-  const value = labelIndex[activityId]?.[lang]?.[label]
-  if (value === undefined)
-    throw new Error(
-      `No option with label "${label}" in activity "${activityId}" (${lang})`
-    )
-  return value
-}
+const labelIndex = buildLabelIndex(nihssIndex)
+const byLabel = createByLabel(labelIndex)
 
 // ── interpretNIHSS ────────────────────────────────────────────────────────────
 
