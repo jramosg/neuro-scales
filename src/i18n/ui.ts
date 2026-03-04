@@ -811,8 +811,7 @@ export const ui: Record<Langs, Record<string, string>> = {
     'fisher.grade.label': 'Fisher Aldatuaren Gradua',
     'fisher.grade.note':
       'Ebaluatu: (1) HSA presentzia, (2) koagulu dentsoen formazioa >1 mm koronalean edo >3×5 mm axialean, (3) intrabentricular hemorragia.',
-    'fisher.grade.opt-0':
-      '0 Gradua — HSA eta intrabentricular hemorragia gabe',
+    'fisher.grade.opt-0': '0 Gradua — HSA eta intrabentricular hemorragia gabe',
     'fisher.grade.opt-1':
       'I Gradua — HSA fokal edo difusoa, koagulurik gabe eta intrabentricular hemorragia gabe. Basoespasmoaren arrisku baxua.',
     'fisher.grade.opt-2':
