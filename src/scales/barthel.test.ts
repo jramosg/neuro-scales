@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { scoreBarthel, interpretBarthel, barthelIndex } from './barthel'
+import { buildLabelIndex, createByLabel } from './test-utils'
+
+const labelIndex = buildLabelIndex(barthelIndex)
+const byLabel = createByLabel(labelIndex)
 
 describe('interpretBarthel', () => {
   it('returns independent for 100', () => {
@@ -91,6 +95,73 @@ describe('scoreBarthel', () => {
     const result = scoreBarthel(answers)
     expect(result.score).toBe(30)
     expect(result.level).toBe('severe')
+  })
+
+  it('completely dependent patient with full incontinence + unable to move + needs feeding scores 0 (dependencia total)', () => {
+    const answers: Record<string, number> = {
+      feeding: byLabel('feeding', 'Dependiente — necesita ser alimentado'),
+      bathing: byLabel('bathing', 'Dependiente — necesita ayuda'),
+      grooming: byLabel('grooming', 'Dependiente — necesita ayuda'),
+      dressing: byLabel('dressing', 'Dependiente — necesita ayuda total'),
+      bowel: byLabel('bowel', 'Incontinente — o necesita enema'),
+      bladder: byLabel('bladder', 'Incontinente — o cateterizado'),
+      toilet: byLabel('toilet', 'Dependiente'),
+      transfers: byLabel('transfers', 'Dependiente — no puede sentarse'),
+      mobility: byLabel('mobility', 'Dependiente — no puede deambular'),
+      stairs: byLabel('stairs', 'Dependiente — incapaz de subir escaleras'),
+    }
+    const result = scoreBarthel(answers)
+    expect(result.score).toBe(0)
+    expect(result.level).toBe('total')
+    expect(result.levelKey).toBe('results.total')
+  })
+
+  const answers: Record<string, number> = {
+    feeding: byLabel(
+      'feeding',
+      'Necesita ayuda — cortar alimentos, untar pan, etc.'
+    ), // 5
+    bathing: byLabel('bathing', 'Dependiente — necesita ayuda'), // 0
+    grooming: byLabel(
+      'grooming',
+      'Independiente — lavarse cara, peinarse, afeitarse'
+    ), // 5
+    dressing: byLabel('dressing', 'Dependiente — necesita ayuda total'), // 0
+    bowel: byLabel(
+      'bowel',
+      'Accidente ocasional — menos de una vez por semana'
+    ), // 5
+    bladder: byLabel('bladder', 'Incontinente — o cateterizado'), // 0
+    toilet: byLabel(
+      'toilet',
+      'Necesita ayuda — mantiene equilibrio, limpia solo'
+    ), // 5
+    transfers: byLabel(
+      'transfers',
+      'Gran ayuda — puede sentarse, necesita ayuda para transferirse'
+    ), // 5
+    mobility: byLabel(
+      'mobility',
+      'Necesita ayuda — supervisión física o verbal'
+    ), // 10
+    stairs: byLabel('stairs', 'Dependiente — incapaz de subir escaleras'), // 0
+  }
+
+  it('severe dependence: partial continence + needs help with grooming + assisted walking scores 35 (dependencia grave)', () => {
+    const result = scoreBarthel(answers)
+    expect(result.score).toBe(35)
+    expect(result.level).toBe('severe')
+    expect(result.levelKey).toBe('results.severe')
+  })
+
+  it('change in one activity updates score and level accordingly', () => {
+    answers.stairs = byLabel(
+      'stairs',
+      'Necesita ayuda — supervisión verbal o física'
+    ) // +5
+    const result2 = scoreBarthel(answers)
+    expect(result2.score).toBe(40)
+    expect(result2.level).toBe('moderate')
   })
 })
 
