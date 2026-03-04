@@ -116,13 +116,14 @@ jobs:
       - name: Health check
         uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17 # v1.2.0
         env:
+          IMAGE: ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
           APP_PORT: ${{ secrets.APP_PORT }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
-          envs: APP_PORT
+          envs: IMAGE,APP_PORT
           script: |
             set -e
             cd ~/neuro-scales
