@@ -1,35 +1,43 @@
 ---
 interface Props {
-  title: string;
-  subtitle: string;
-  description: string;
-  href: string;
-  badge?: string;
+  title: string
+  subtitle: string
+  description: string
+  href: string
+  badge?: string
 }
 
-const { title, subtitle, description, href, badge } = Astro.props;
+const { title, subtitle, description, href, badge } = Astro.props
 ---
 
-<a href={href} class="scale-card">
-  <div class="card-inner">
-    <div class="card-header">
-      <div class="card-titles">
-        <h3 class="card-title">{title}</h3>
-        <p class="card-subtitle">{subtitle}</p>
+<a href={href} class='scale-card'>
+  <div class='card-inner'>
+    <div class='card-header'>
+      <div class='card-titles'>
+        <h3 class='card-title'>{title}</h3>
+        <p class='card-subtitle'>{subtitle}</p>
       </div>
-      {badge && <span class="badge">{badge}</span>}
+      {badge && <span class='badge'>{badge}</span>}
     </div>
-    <p class="card-description">{description}</p>
-    <div class="card-footer">
-      <span class="cta">
+    <p class='card-description'>{description}</p>
+    <div class='card-footer'>
+      <span class='cta'>
         Valorar
-        <svg class="arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M3 8h10M9 4l4 4-4 4"/>
+        <svg
+          class='arrow'
+          width='16'
+          height='16'
+          viewBox='0 0 16 16'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='1.5'
+        >
+          <path d='M3 8h10M9 4l4 4-4 4'></path>
         </svg>
       </span>
     </div>
   </div>
-  <div class="card-glow" aria-hidden="true"></div>
+  <div class='card-glow' aria-hidden='true'></div>
 </a>
 
 <style>
@@ -42,7 +50,9 @@ const { title, subtitle, description, href, badge } = Astro.props;
     overflow: hidden;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
-    transition: border-color var(--transition-med), transform var(--transition-med);
+    transition:
+      border-color var(--transition-med),
+      transform var(--transition-med);
   }
 
   .scale-card:hover {
@@ -62,7 +72,11 @@ const { title, subtitle, description, href, badge } = Astro.props;
   .card-glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, var(--color-accent-dim) 0%, transparent 70%);
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      var(--color-accent-dim) 0%,
+      transparent 70%
+    );
     opacity: 0;
     transition: opacity var(--transition-med);
     pointer-events: none;

@@ -1,125 +1,138 @@
 ---
 export interface LevelInfo {
-  key: string;
-  label: string;
-  desc: string;
-  colorIndex: 0 | 1 | 2 | 3 | 4;
+  key: string
+  label: string
+  desc: string
+  colorIndex: 0 | 1 | 2 | 3 | 4
 }
 
 export interface Zone {
-  from: number;
-  to: number;
-  colorIndex: 0 | 1 | 2 | 3 | 4;
-  label: string;
+  from: number
+  to: number
+  colorIndex: 0 | 1 | 2 | 3 | 4
+  label: string
 }
 
 interface Props {
-  maxScore: number;
-  maxLabel: string;
-  scoreLabel: string;
-  interpretationTitle: string;
-  rangesTitle: string;
-  retakeLabel: string;
-  backHref: string;
-  backLabel: string;
-  levels: LevelInfo[];
-  zones: Zone[];
-  gaugeMarks: number[];
+  maxScore: number
+  maxLabel: string
+  scoreLabel: string
+  interpretationTitle: string
+  rangesTitle: string
+  retakeLabel: string
+  backHref: string
+  backLabel: string
+  levels: LevelInfo[]
+  zones: Zone[]
+  gaugeMarks: number[]
 }
 
 const {
-  maxScore, maxLabel, scoreLabel, interpretationTitle,
-  rangesTitle, retakeLabel, backHref, backLabel,
-  levels, zones, gaugeMarks,
-} = Astro.props;
+  maxScore,
+  maxLabel,
+  scoreLabel,
+  interpretationTitle,
+  rangesTitle,
+  retakeLabel,
+  backHref,
+  backLabel,
+  levels,
+  zones,
+  gaugeMarks,
+} = Astro.props
 
 // Build levels lookup keyed by level key
 const levelsMap = Object.fromEntries(
-  levels.map((l) => [l.key, { label: l.label, desc: l.desc, colorIndex: l.colorIndex }])
-);
+  levels.map((l) => [
+    l.key,
+    { label: l.label, desc: l.desc, colorIndex: l.colorIndex },
+  ])
+)
 ---
 
 <div
-  id="results-card"
-  class="results-card"
+  id='results-card'
+  class='results-card'
   hidden
-  aria-live="polite"
+  aria-live='polite'
   data-levels={JSON.stringify(levelsMap)}
   data-max-score={String(maxScore)}
 >
-  <div class="results-inner">
+  <div class='results-inner'>
     <!-- Header: score + level -->
-    <div class="results-header">
-      <div id="result-level-block" class="level-block">
-        <span id="score-value" class="score-value">—</span>
-        <span class="score-max">{maxLabel}</span>
+    <div class='results-header'>
+      <div id='result-level-block' class='level-block'>
+        <span id='score-value' class='score-value'>—</span>
+        <span class='score-max'>{maxLabel}</span>
       </div>
-      <div class="level-text">
-        <p class="score-label">{scoreLabel}</p>
-        <p id="level-label" class="level-label"></p>
+      <div class='level-text'>
+        <p class='score-label'>{scoreLabel}</p>
+        <p id='level-label' class='level-label'></p>
       </div>
     </div>
 
     <!-- Gauge with coloured zone bands -->
     <div
-      class="gauge-wrap"
-      id="gauge-wrap"
-      role="meter"
-      aria-valuemin="0"
+      class='gauge-wrap'
+      id='gauge-wrap'
+      role='meter'
+      aria-valuemin='0'
       aria-valuemax={maxScore}
     >
-      <div class="gauge-track">
+      <div class='gauge-track'>
         <!-- Static zone bands -->
-        {zones.map((zone) => {
-          const left = (zone.from / maxScore) * 100;
-          const width = Math.max(((zone.to - zone.from + 1) / maxScore) * 100, 1.5);
-          return (
-            <div
-              class={`gauge-zone ci-${zone.colorIndex}`}
-              style={`left:${left}%;width:${width}%`}
-              title={zone.label}
-            />
-          );
-        })}
+        {
+          zones.map((zone) => {
+            const left = (zone.from / maxScore) * 100
+            const width = Math.max(
+              ((zone.to - zone.from + 1) / maxScore) * 100,
+              1.5
+            )
+            return (
+              <div
+                class={`gauge-zone ci-${zone.colorIndex}`}
+                style={`left:${left}%;width:${width}%`}
+                title={zone.label}
+              />
+            )
+          })
+        }
         <!-- Animated marker -->
-        <div class="gauge-marker" id="gauge-marker" style="left:0%">
-          <span class="gauge-marker-value" id="gauge-marker-value">0</span>
+        <div class='gauge-marker' id='gauge-marker' style='left:0%'>
+          <span class='gauge-marker-value' id='gauge-marker-value'>0</span>
         </div>
       </div>
-      <div class="gauge-marks">
-        {gaugeMarks.map((mark) => (
-          <span
-            class="gauge-mark"
-            style={`left:${(mark / maxScore) * 100}%`}
-          >
-            {mark}
-          </span>
-        ))}
+      <div class='gauge-marks'>
+        {
+          gaugeMarks.map((mark) => (
+            <span class='gauge-mark' style={`left:${(mark / maxScore) * 100}%`}>
+              {mark}
+            </span>
+          ))
+        }
       </div>
     </div>
 
     <!-- Interpretation -->
-    <div class="interpretation">
-      <p class="interpretation-title">{interpretationTitle}</p>
-      <p id="interpretation-text" class="interpretation-text"></p>
+    <div class='interpretation'>
+      <p class='interpretation-title'>{interpretationTitle}</p>
+      <p id='interpretation-text' class='interpretation-text'></p>
     </div>
 
     <!-- Scale reference ranges -->
-    <details class="scale-ranges">
+    <details class='scale-ranges'>
       <summary>{rangesTitle}</summary>
       <ul>
-        {levels.map((l) => (
-          <li class={`ci-${l.colorIndex}`}>{l.label}</li>
-        ))}
+        {levels.map((l) => <li class={`ci-${l.colorIndex}`}>{l.label}</li>)}
       </ul>
     </details>
 
     <!-- Actions -->
-    <div class="results-actions">
-      <button type="button" id="retake-btn" class="btn-retake">
+    <div class='results-actions'>
+      <button type='button' id='retake-btn' class='btn-retake'>
         {retakeLabel}
       </button>
-      <a href={backHref} class="btn-back">
+      <a href={backHref} class='btn-back'>
         {backLabel}
       </a>
     </div>
@@ -128,62 +141,68 @@ const levelsMap = Object.fromEntries(
 
 <script>
   function initResultsCard() {
-    const card = document.getElementById('results-card') as HTMLElement | null;
-    if (!card) return;
+    const card = document.getElementById('results-card') as HTMLElement | null
+    if (!card) return
 
     // Listen for result events from any scale form
     document.addEventListener('scale:result', (e) => {
-      const { score, level } = (e as CustomEvent<{ score: number; level: string }>).detail;
+      const { score, level } = (
+        e as CustomEvent<{ score: number; level: string }>
+      ).detail
       const levelsData = JSON.parse(card.dataset.levels || '{}') as Record<
         string,
         { label: string; desc: string; colorIndex: number }
-      >;
-      const maxScore = Number(card.dataset.maxScore || 100);
-      const info = levelsData[level] ?? { label: level, desc: '', colorIndex: 2 };
+      >
+      const maxScore = Number(card.dataset.maxScore || 100)
+      const info = levelsData[level] ?? {
+        label: level,
+        desc: '',
+        colorIndex: 2,
+      }
 
-      const scoreEl   = document.getElementById('score-value')!;
-      const markerVal = document.getElementById('gauge-marker-value')!;
-      const levelBlock = document.getElementById('result-level-block')!;
-      const levelLabel = document.getElementById('level-label')!;
-      const interpText = document.getElementById('interpretation-text')!;
-      const marker     = document.getElementById('gauge-marker')!;
-      const gaugeWrap  = document.getElementById('gauge-wrap')!;
+      const scoreEl = document.getElementById('score-value')!
+      const markerVal = document.getElementById('gauge-marker-value')!
+      const levelBlock = document.getElementById('result-level-block')!
+      const levelLabel = document.getElementById('level-label')!
+      const interpText = document.getElementById('interpretation-text')!
+      const marker = document.getElementById('gauge-marker')!
+      const gaugeWrap = document.getElementById('gauge-wrap')!
 
-      scoreEl.textContent   = String(score);
-      markerVal.textContent = String(score);
-      levelLabel.textContent = info.label;
-      interpText.textContent = info.desc;
+      scoreEl.textContent = String(score)
+      markerVal.textContent = String(score)
+      levelLabel.textContent = info.label
+      interpText.textContent = info.desc
 
       // Apply level colour
-      levelBlock.className = `level-block ci-${info.colorIndex}`;
-      levelLabel.className = `level-label ci-${info.colorIndex}`;
+      levelBlock.className = `level-block ci-${info.colorIndex}`
+      levelLabel.className = `level-label ci-${info.colorIndex}`
 
       // Animate marker
-      const pct = (score / maxScore) * 100;
+      const pct = (score / maxScore) * 100
       // small delay so CSS transition fires after unhide
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          marker.style.left = `${pct}%`;
-        });
-      });
-      gaugeWrap.setAttribute('aria-valuenow', String(score));
+          marker.style.left = `${pct}%`
+        })
+      })
+      gaugeWrap.setAttribute('aria-valuenow', String(score))
 
       // Show card with animation
-      card.hidden = false;
-      card.querySelector('.results-inner')!.classList.add('animate-in');
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+      card.hidden = false
+      card.querySelector('.results-inner')!.classList.add('animate-in')
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
 
     // Retake button → tell the form to reset
     document.getElementById('retake-btn')?.addEventListener('click', () => {
-      card.hidden = true;
-      card.querySelector('.results-inner')?.classList.remove('animate-in');
-      document.dispatchEvent(new CustomEvent('scale:retake'));
-    });
+      card.hidden = true
+      card.querySelector('.results-inner')?.classList.remove('animate-in')
+      document.dispatchEvent(new CustomEvent('scale:retake'))
+    })
   }
 
-  initResultsCard();
-  document.addEventListener('astro:after-swap', initResultsCard);
+  initResultsCard()
+  document.addEventListener('astro:after-swap', initResultsCard)
 </script>
 
 <style>
@@ -198,7 +217,9 @@ const levelsMap = Object.fromEntries(
     border-radius: var(--radius-xl);
     background: var(--color-surface);
     overflow: hidden;
-    transition: background-color var(--transition-theme), border-color var(--transition-theme);
+    transition:
+      background-color var(--transition-theme),
+      border-color var(--transition-theme);
   }
 
   .results-inner.animate-in {
@@ -208,7 +229,11 @@ const levelsMap = Object.fromEntries(
   /* ── Header ── */
   .results-header {
     padding: var(--s7) var(--s7) var(--s6);
-    background: linear-gradient(160deg, var(--color-surface-raised) 0%, var(--color-surface) 100%);
+    background: linear-gradient(
+      160deg,
+      var(--color-surface-raised) 0%,
+      var(--color-surface) 100%
+    );
     border-bottom: 1px solid var(--color-border);
     display: flex;
     align-items: center;
@@ -283,10 +308,16 @@ const levelsMap = Object.fromEntries(
   }
 
   /* Round the outer edges */
-  .gauge-zone:first-child  { border-radius: 99px 0 0 99px; }
-  .gauge-zone:last-of-type { border-radius: 0 99px 99px 0; }
+  .gauge-zone:first-child {
+    border-radius: 99px 0 0 99px;
+  }
+  .gauge-zone:last-of-type {
+    border-radius: 0 99px 99px 0;
+  }
 
-  [data-theme='dark'] .gauge-zone { opacity: 0.45; }
+  [data-theme='dark'] .gauge-zone {
+    opacity: 0.45;
+  }
 
   /* Animated position marker */
   .gauge-marker {
@@ -310,7 +341,9 @@ const levelsMap = Object.fromEntries(
     border-radius: 50%;
     box-shadow: 0 0 0 2px var(--color-text);
     display: block;
-    transition: background-color var(--transition-theme), border-color var(--transition-theme);
+    transition:
+      background-color var(--transition-theme),
+      border-color var(--transition-theme);
   }
 
   .gauge-marker-value {
@@ -385,7 +418,9 @@ const levelsMap = Object.fromEntries(
     transition: transform var(--transition-fast);
   }
 
-  .scale-ranges[open] summary::before { transform: rotate(90deg); }
+  .scale-ranges[open] summary::before {
+    transform: rotate(90deg);
+  }
 
   .scale-ranges ul {
     margin-top: var(--s2);
@@ -458,7 +493,13 @@ const levelsMap = Object.fromEntries(
   }
 
   @media (max-width: 480px) {
-    .results-header { flex-direction: column; align-items: flex-start; gap: var(--s3); }
-    .score-value { font-size: 3rem; }
+    .results-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--s3);
+    }
+    .score-value {
+      font-size: 3rem;
+    }
   }
 </style>

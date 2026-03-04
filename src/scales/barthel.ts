@@ -1,4 +1,4 @@
-import type { ScaleDefinition, ScaleResult, DependencyLevel } from './types';
+import type { ScaleDefinition, ScaleResult, DependencyLevel } from './types'
 
 export const barthelIndex: ScaleDefinition = {
   id: 'barthel',
@@ -100,33 +100,42 @@ export const barthelIndex: ScaleDefinition = {
       ],
     },
   ],
-};
+}
 
-const levelKeyMap: Record<DependencyLevel, { levelKey: string; levelDescKey: string }> = {
-  independent: { levelKey: 'results.independent', levelDescKey: 'results.independent.desc' },
+const levelKeyMap: Record<
+  DependencyLevel,
+  { levelKey: string; levelDescKey: string }
+> = {
+  independent: {
+    levelKey: 'results.independent',
+    levelDescKey: 'results.independent.desc',
+  },
   mild: { levelKey: 'results.mild', levelDescKey: 'results.mild.desc' },
-  moderate: { levelKey: 'results.moderate', levelDescKey: 'results.moderate.desc' },
+  moderate: {
+    levelKey: 'results.moderate',
+    levelDescKey: 'results.moderate.desc',
+  },
   severe: { levelKey: 'results.severe', levelDescKey: 'results.severe.desc' },
   total: { levelKey: 'results.total', levelDescKey: 'results.total.desc' },
-};
+}
 
 export function interpretBarthel(score: number): DependencyLevel {
-  if (score >= 100) return 'independent';
-  if (score >= 60) return 'mild';
-  if (score >= 40) return 'moderate';
-  if (score >= 20) return 'severe';
-  return 'total';
+  if (score >= 100) return 'independent'
+  if (score >= 60) return 'mild'
+  if (score >= 40) return 'moderate'
+  if (score >= 20) return 'severe'
+  return 'total'
 }
 
 export function scoreBarthel(answers: Record<string, number>): ScaleResult {
-  const score = Object.values(answers).reduce((sum, v) => sum + v, 0);
-  const level = interpretBarthel(score);
-  const { levelKey, levelDescKey } = levelKeyMap[level];
+  const score = Object.values(answers).reduce((sum, v) => sum + v, 0)
+  const level = interpretBarthel(score)
+  const { levelKey, levelDescKey } = levelKeyMap[level]
   return {
     score,
     maxScore: barthelIndex.maxScore,
     level,
     levelKey,
     levelDescKey,
-  };
+  }
 }

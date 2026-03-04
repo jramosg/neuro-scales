@@ -1,36 +1,53 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import BarthelForm from '../../../components/BarthelForm.astro';
-import { getStaticLangPaths, getLangFromUrl, useTranslations } from '../../../i18n/utils';
-import { barthelIndex } from '../../../scales/barthel';
+import Layout from '../../../layouts/Layout.astro'
+import BarthelForm from '../../../components/BarthelForm.astro'
+import {
+  getStaticLangPaths,
+  getLangFromUrl,
+  useTranslations,
+} from '../../../i18n/utils'
+import { barthelIndex } from '../../../scales/barthel'
 
 export function getStaticPaths() {
-  return getStaticLangPaths();
+  return getStaticLangPaths()
 }
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
 <Layout title={t('barthel.title')} description={t('barthel.description')}>
-  <div class="page">
-    <div class="page-header">
-      <a href={`/${lang}`} class="breadcrumb">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M9 2L4 7l5 5"/>
+  <div class='page'>
+    <div class='page-header'>
+      <a href={`/${lang}`} class='breadcrumb'>
+        <svg
+          width='14'
+          height='14'
+          viewBox='0 0 14 14'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='1.5'
+          aria-hidden='true'
+        >
+          <path d='M9 2L4 7l5 5'></path>
         </svg>
         {t('nav.home')}
       </a>
-      <div class="header-content">
-        <div class="scale-meta">
-          <span class="scale-tag">ABVD</span>
-          <span class="scale-activities">{barthelIndex.activities.length} {lang === 'es' ? 'actividades' : 'jarduera'}</span>
-          <span class="scale-range">{lang === 'es' ? 'Puntuación 0–100' : 'Puntuazioa 0–100'}</span>
+      <div class='header-content'>
+        <div class='scale-meta'>
+          <span class='scale-tag'>ABVD</span>
+          <span class='scale-activities'
+            >{barthelIndex.activities.length}
+            {lang === 'es' ? 'actividades' : 'jarduera'}</span
+          >
+          <span class='scale-range'
+            >{lang === 'es' ? 'Puntuación 0–100' : 'Puntuazioa 0–100'}</span
+          >
         </div>
-        <h1 class="page-title">{t('barthel.title')}</h1>
-        <p class="page-subtitle">{t('barthel.subtitle')}</p>
+        <h1 class='page-title'>{t('barthel.title')}</h1>
+        <p class='page-subtitle'>{t('barthel.subtitle')}</p>
       </div>
-      <p class="instructions">{t('barthel.instructions')}</p>
+      <p class='instructions'>{t('barthel.instructions')}</p>
     </div>
 
     <BarthelForm />
@@ -89,13 +106,15 @@ const t = useTranslations(lang);
     padding: 2px 7px;
   }
 
-  .scale-activities, .scale-range {
+  .scale-activities,
+  .scale-range {
     font-size: 0.775rem;
     color: var(--color-text-dim);
     letter-spacing: 0.01em;
   }
 
-  .scale-activities::before, .scale-range::before {
+  .scale-activities::before,
+  .scale-range::before {
     content: '·';
     margin-right: var(--s3);
     color: var(--color-text-dim);

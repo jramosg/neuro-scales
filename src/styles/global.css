@@ -1,7 +1,7 @@
-@import "@fontsource/dm-serif-display/400.css";
-@import "@fontsource/libre-franklin/400.css";
-@import "@fontsource/libre-franklin/500.css";
-@import "@fontsource/libre-franklin/600.css";
+@import '@fontsource/dm-serif-display/400.css';
+@import '@fontsource/libre-franklin/400.css';
+@import '@fontsource/libre-franklin/500.css';
+@import '@fontsource/libre-franklin/600.css';
 
 /* ── Light theme (default) ── */
 :root {
@@ -37,8 +37,8 @@
   --color-total: #a82828;
 
   /* Typography */
-  --font-serif: "DM Serif Display", "Palatino Linotype", Georgia, serif;
-  --font-sans: "Libre Franklin", "Segoe UI", system-ui, sans-serif;
+  --font-serif: 'DM Serif Display', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'Libre Franklin', 'Segoe UI', system-ui, sans-serif;
 
   /* Spacing */
   --s1: 0.25rem;
@@ -65,7 +65,7 @@
 }
 
 /* ── Dark theme ── */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-bg: #0c0f15;
   --color-surface: #131820;
   --color-surface-raised: #1a2133;
@@ -94,11 +94,21 @@
 }
 
 /* ── Level color system (shared by all scales, 0=best → 4=worst) ── */
-.ci-0 { --level-color: var(--color-independent); }
-.ci-1 { --level-color: var(--color-mild); }
-.ci-2 { --level-color: var(--color-moderate); }
-.ci-3 { --level-color: var(--color-severe); }
-.ci-4 { --level-color: var(--color-total); }
+.ci-0 {
+  --level-color: var(--color-independent);
+}
+.ci-1 {
+  --level-color: var(--color-mild);
+}
+.ci-2 {
+  --level-color: var(--color-moderate);
+}
+.ci-3 {
+  --level-color: var(--color-severe);
+}
+.ci-4 {
+  --level-color: var(--color-total);
+}
 
 /* ── Base ── */
 *,

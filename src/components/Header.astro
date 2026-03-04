@@ -1,35 +1,45 @@
 ---
-import { getLangFromUrl, useTranslations, switchLanguage } from '../i18n/utils';
-import ThemeToggle from './ThemeToggle.astro';
+import { getLangFromUrl, useTranslations, switchLanguage } from '../i18n/utils'
+import ThemeToggle from './ThemeToggle.astro'
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const altLangUrl = switchLanguage(Astro.url);
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const altLangUrl = switchLanguage(Astro.url)
 ---
 
 <header>
-  <div class="container">
-    <a href={`/${lang}`} class="logo" aria-label={t('nav.home')}>
-      <span class="logo-icon" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
-          <path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/>
-          <path d="M12 8v-2M12 18v-2M8 12H6M18 12h-2"/>
+  <div class='container'>
+    <a href={`/${lang}`} class='logo' aria-label={t('nav.home')}>
+      <span class='logo-icon' aria-hidden='true'>
+        <svg
+          width='22'
+          height='22'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='1.5'
+        >
+          <path
+            d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z'
+          ></path>
+          <path d='M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z'
+          ></path>
+          <path d='M12 8v-2M12 18v-2M8 12H6M18 12h-2'></path>
         </svg>
       </span>
-      <span class="logo-text">NeuroEskalak</span>
+      <span class='logo-text'>NeuroEskalak</span>
     </a>
 
-    <nav aria-label="Principal">
-      <a href={`/${lang}`} class="nav-link">{t('nav.home')}</a>
+    <nav aria-label='Principal'>
+      <a href={`/${lang}`} class='nav-link'>{t('nav.home')}</a>
     </nav>
 
-    <div class="controls">
+    <div class='controls'>
       <ThemeToggle />
 
-      <a href={altLangUrl} class="lang-toggle" aria-label={t('lang.switch')}>
-        <span class="lang-badge">{lang === 'es' ? 'ES' : 'EU'}</span>
-        <span class="lang-label">{t('lang.switch')}</span>
+      <a href={altLangUrl} class='lang-toggle' aria-label={t('lang.switch')}>
+        <span class='lang-badge'>{lang === 'es' ? 'ES' : 'EU'}</span>
+        <span class='lang-label'>{t('lang.switch')}</span>
       </a>
     </div>
   </div>
@@ -45,7 +55,9 @@ const altLangUrl = switchLanguage(Astro.url);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
-    transition: background-color var(--transition-theme), border-color var(--transition-theme);
+    transition:
+      background-color var(--transition-theme),
+      border-color var(--transition-theme);
   }
 
   .container {
@@ -109,6 +121,7 @@ const altLangUrl = switchLanguage(Astro.url);
     display: flex;
     align-items: center;
     gap: var(--s2);
+    flex-wrap: nowrap;
   }
 
   .lang-toggle {
@@ -125,6 +138,7 @@ const altLangUrl = switchLanguage(Astro.url);
     transition: all var(--transition-fast);
     background: transparent;
     height: 34px;
+    flex-shrink: 0;
   }
 
   .lang-toggle:hover {

@@ -1,19 +1,23 @@
 ---
+
 ---
+
 <script is:inline>
   function getStoredTheme() {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark' || saved === 'light') return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const saved = localStorage.getItem('theme')
+    if (saved === 'dark' || saved === 'light') return saved
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
   }
 
   function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme', theme)
   }
 
-  applyTheme(getStoredTheme());
+  applyTheme(getStoredTheme())
 
   document.addEventListener('astro:after-swap', () => {
-    applyTheme(getStoredTheme());
-  });
+    applyTheme(getStoredTheme())
+  })
 </script>

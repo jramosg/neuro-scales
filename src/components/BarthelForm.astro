@@ -1,66 +1,91 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import { barthelIndex } from "../scales/barthel";
-import ScaleResultsCard from "./ScaleResultsCard.astro";
-import type { LevelInfo, Zone } from "./ScaleResultsCard.astro";
+import { getLangFromUrl, useTranslations } from '../i18n/utils'
+import { barthelIndex } from '../scales/barthel'
+import ScaleResultsCard from './ScaleResultsCard.astro'
+import type { LevelInfo, Zone } from './ScaleResultsCard.astro'
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 
 const barthelLevels: LevelInfo[] = [
-  { key: 'independent', label: t('results.independent'), desc: t('results.independent.desc'), colorIndex: 0 },
-  { key: 'mild',        label: t('results.mild'),        desc: t('results.mild.desc'),        colorIndex: 1 },
-  { key: 'moderate',    label: t('results.moderate'),    desc: t('results.moderate.desc'),    colorIndex: 2 },
-  { key: 'severe',      label: t('results.severe'),      desc: t('results.severe.desc'),      colorIndex: 3 },
-  { key: 'total',       label: t('results.total'),       desc: t('results.total.desc'),       colorIndex: 4 },
-];
+  {
+    key: 'independent',
+    label: t('results.independent'),
+    desc: t('results.independent.desc'),
+    colorIndex: 0,
+  },
+  {
+    key: 'mild',
+    label: t('results.mild'),
+    desc: t('results.mild.desc'),
+    colorIndex: 1,
+  },
+  {
+    key: 'moderate',
+    label: t('results.moderate'),
+    desc: t('results.moderate.desc'),
+    colorIndex: 2,
+  },
+  {
+    key: 'severe',
+    label: t('results.severe'),
+    desc: t('results.severe.desc'),
+    colorIndex: 3,
+  },
+  {
+    key: 'total',
+    label: t('results.total'),
+    desc: t('results.total.desc'),
+    colorIndex: 4,
+  },
+]
 
 const barthelZones: Zone[] = [
-  { from: 0,   to: 19,  colorIndex: 4, label: t('results.range.0') },
-  { from: 20,  to: 39,  colorIndex: 3, label: t('results.range.20') },
-  { from: 40,  to: 59,  colorIndex: 2, label: t('results.range.40') },
-  { from: 60,  to: 99,  colorIndex: 1, label: t('results.range.60') },
+  { from: 0, to: 19, colorIndex: 4, label: t('results.range.0') },
+  { from: 20, to: 39, colorIndex: 3, label: t('results.range.20') },
+  { from: 40, to: 59, colorIndex: 2, label: t('results.range.40') },
+  { from: 60, to: 99, colorIndex: 1, label: t('results.range.60') },
   { from: 100, to: 100, colorIndex: 0, label: t('results.range.100') },
-];
+]
 ---
 
-<div class="barthel-wrapper">
-  <form id="barthel-form" novalidate>
-    <div class="progress-bar-wrap">
-      <p class="progress-info">
-        <span id="progress-count">0</span>&nbsp;{t("barthel.progress")}
+<div class='barthel-wrapper'>
+  <form id='barthel-form' novalidate>
+    <div class='progress-bar-wrap'>
+      <p class='progress-info'>
+        <span id='progress-count'>0</span>&nbsp;{t('barthel.progress')}
       </p>
-      <div class="progress-track">
-        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      <div class='progress-track'>
+        <div class='progress-fill' id='progress-fill' style='width:0%'></div>
       </div>
     </div>
 
-    <div class="activities">
+    <div class='activities'>
       {
         barthelIndex.activities.map((activity, idx) => (
           <fieldset
-            class="activity-group"
+            class='activity-group'
             style={`animation-delay: ${idx * 60}ms`}
             data-activity={activity.id}
           >
-            <legend class="activity-label">
-              <span class="activity-num">
-                {String(idx + 1).padStart(2, "0")}
+            <legend class='activity-label'>
+              <span class='activity-num'>
+                {String(idx + 1).padStart(2, '0')}
               </span>
               {t(activity.labelKey)}
             </legend>
-            <div class="options">
+            <div class='options'>
               {activity.options.map((opt) => (
-                <label class="option-label">
+                <label class='option-label'>
                   <input
-                    type="radio"
+                    type='radio'
                     name={activity.id}
                     value={String(opt.value)}
-                    class="option-radio"
+                    class='option-radio'
                   />
-                  <span class="option-card">
-                    <span class="option-score">{opt.value}</span>
-                    <span class="option-text">{t(opt.labelKey)}</span>
+                  <span class='option-card'>
+                    <span class='option-score'>{opt.value}</span>
+                    <span class='option-text'>{t(opt.labelKey)}</span>
                   </span>
                 </label>
               ))}
@@ -70,63 +95,65 @@ const barthelZones: Zone[] = [
       }
     </div>
 
-    <div class="form-actions">
+    <div class='form-actions'>
       <button
-        type="submit"
-        id="calculate-btn"
-        class="btn-calculate"
+        type='submit'
+        id='calculate-btn'
+        class='btn-calculate'
         disabled
-        aria-describedby="calculate-hint"
+        aria-describedby='calculate-hint'
       >
-        {t("barthel.calculate")}
+        {t('barthel.calculate')}
       </button>
-      <p id="calculate-hint" class="calculate-hint">
-        {t("barthel.calculate-hint")}
+      <p id='calculate-hint' class='calculate-hint'>
+        {t('barthel.calculate-hint')}
       </p>
+      <p class='privacy-note'>{t('form.privacy')}</p>
     </div>
   </form>
 </div>
 
 <ScaleResultsCard
   maxScore={100}
-  maxLabel={t("results.max")}
-  scoreLabel={t("results.score")}
-  interpretationTitle={t("results.interpretation")}
-  rangesTitle={t("results.scale-ranges")}
-  retakeLabel={t("results.retake")}
+  maxLabel={t('results.max')}
+  scoreLabel={t('results.score')}
+  interpretationTitle={t('results.interpretation')}
+  rangesTitle={t('results.scale-ranges')}
+  retakeLabel={t('results.retake')}
   backHref={`/${lang}`}
-  backLabel={t("results.back")}
+  backLabel={t('results.back')}
   levels={barthelLevels}
   zones={barthelZones}
   gaugeMarks={[0, 20, 40, 60, 100]}
 />
 
 <script>
-  import { scoreBarthel, barthelIndex } from "../scales/barthel";
+  import { scoreBarthel, barthelIndex } from '../scales/barthel'
+  import { setupFormProgress } from '../utils/form'
 
   function initBarthelForm() {
     setupFormProgress({
-      formId: "barthel-form",
-      calculateBtnId: "calculate-btn",
-      calculateHintId: "calculate-hint",
-      progressCountId: "progress-count",
-      progressFillId: "progress-fill",
+      formId: 'barthel-form',
+      calculateBtnId: 'calculate-btn',
+      calculateHintId: 'calculate-hint',
+      progressCountId: 'progress-count',
+      progressFillId: 'progress-fill',
       totalItems: barthelIndex.activities.length,
       onCalculate: (answers) => {
-        const result = scoreBarthel(answers);
-        const form = document.getElementById("barthel-form");
-        if (form) form.hidden = true;
+        const result = scoreBarthel(answers)
+        const form = document.getElementById('barthel-form')
+        if (form) form.hidden = true
         document.dispatchEvent(
-          new CustomEvent("scale:result", {
+          new CustomEvent('scale:result', {
             detail: { score: result.score, level: result.level },
-          }),
-        );
+          })
+        )
       },
-    });
+    })
   }
 
-  initBarthelForm();
-  document.addEventListener("astro:after-swap", initBarthelForm);
+  initBarthelForm()
+  document.addEventListener('astro:after-swap', initBarthelForm)
 </script>
 
 <style>
@@ -325,5 +352,11 @@ const barthelZones: Zone[] = [
   .calculate-hint {
     font-size: 0.8rem;
     color: var(--color-text-dim);
+  }
+
+  .privacy-note {
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+    margin-top: var(--s2);
   }
 </style>

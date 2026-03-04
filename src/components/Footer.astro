@@ -1,19 +1,21 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, useTranslations } from '../i18n/utils'
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const year = new Date().getFullYear();
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const year = new Date().getFullYear()
 ---
 
 <footer>
-  <div class="container">
-    <div class="left">
-      <span class="brand">{t('footer.credits')}</span>
-      <span class="sep" aria-hidden="true">·</span>
-      <span class="disclaimer">{t('footer.disclaimer')}</span>
+  <div class='container'>
+    <div class='left'>
+      <span class='brand'>{t('footer.credits')}</span>
+      <span class='sep' aria-hidden='true'>·</span>
+      <span class='disclaimer'>{t('footer.disclaimer')}</span>
+      <span class='sep' aria-hidden='true'>·</span>
+      <span class='privacy'>{t('footer.privacy')}</span>
     </div>
-    <span class="year">{year}</span>
+    <span class='year'>{year}</span>
   </div>
 </footer>
 
@@ -61,14 +63,29 @@ const year = new Date().getFullYear();
     font-style: italic;
   }
 
+  .privacy {
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+    font-weight: 500;
+  }
+
   .year {
     font-size: 0.75rem;
     color: var(--color-text-dim);
     flex-shrink: 0;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     .disclaimer {
+      display: none;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .privacy {
+      display: none;
+    }
+    .sep:last-of-type {
       display: none;
     }
   }

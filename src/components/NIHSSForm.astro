@@ -1,145 +1,186 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import { nihssIndex } from "../scales/nihss";
-import ScaleResultsCard from "./ScaleResultsCard.astro";
-import type { LevelInfo, Zone } from "./ScaleResultsCard.astro";
+import { getLangFromUrl, useTranslations } from '../i18n/utils'
+import { nihssIndex } from '../scales/nihss'
+import ScaleResultsCard from './ScaleResultsCard.astro'
+import type { LevelInfo, Zone } from './ScaleResultsCard.astro'
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 
 const nihssLevels: LevelInfo[] = [
-  { key: 'normal',          label: t('nihss.result.normal'),          desc: t('nihss.result.normal.desc'),          colorIndex: 0 },
-  { key: 'mild',            label: t('nihss.result.mild'),            desc: t('nihss.result.mild.desc'),            colorIndex: 1 },
-  { key: 'moderate',        label: t('nihss.result.moderate'),        desc: t('nihss.result.moderate.desc'),        colorIndex: 2 },
-  { key: 'moderate_severe', label: t('nihss.result.moderate_severe'), desc: t('nihss.result.moderate_severe.desc'), colorIndex: 3 },
-  { key: 'severe',          label: t('nihss.result.severe'),          desc: t('nihss.result.severe.desc'),          colorIndex: 4 },
-];
+  {
+    key: 'normal',
+    label: t('nihss.result.normal'),
+    desc: t('nihss.result.normal.desc'),
+    colorIndex: 0,
+  },
+  {
+    key: 'mild',
+    label: t('nihss.result.mild'),
+    desc: t('nihss.result.mild.desc'),
+    colorIndex: 1,
+  },
+  {
+    key: 'moderate',
+    label: t('nihss.result.moderate'),
+    desc: t('nihss.result.moderate.desc'),
+    colorIndex: 2,
+  },
+  {
+    key: 'moderate_severe',
+    label: t('nihss.result.moderate_severe'),
+    desc: t('nihss.result.moderate_severe.desc'),
+    colorIndex: 3,
+  },
+  {
+    key: 'severe',
+    label: t('nihss.result.severe'),
+    desc: t('nihss.result.severe.desc'),
+    colorIndex: 4,
+  },
+]
 
 const nihssZones: Zone[] = [
-  { from: 0,  to: 0,  colorIndex: 0, label: t('nihss.results.range.normal') },
-  { from: 1,  to: 4,  colorIndex: 1, label: t('nihss.results.range.mild') },
-  { from: 5,  to: 15, colorIndex: 2, label: t('nihss.results.range.moderate') },
-  { from: 16, to: 20, colorIndex: 3, label: t('nihss.results.range.moderate_severe') },
+  { from: 0, to: 0, colorIndex: 0, label: t('nihss.results.range.normal') },
+  { from: 1, to: 4, colorIndex: 1, label: t('nihss.results.range.mild') },
+  { from: 5, to: 15, colorIndex: 2, label: t('nihss.results.range.moderate') },
+  {
+    from: 16,
+    to: 20,
+    colorIndex: 3,
+    label: t('nihss.results.range.moderate_severe'),
+  },
   { from: 21, to: 42, colorIndex: 4, label: t('nihss.results.range.severe') },
-];
+]
 
 // Pairs: these IDs are the "right" side of a bilateral item pair
-const bilateralRight = new Set(['arm_right', 'leg_right']);
+const bilateralRight = new Set(['arm_right', 'leg_right'])
 // These are the "left" side (paired with the preceding right item)
-const bilateralLeft  = new Set(['arm_left', 'leg_left']);
+const bilateralLeft = new Set(['arm_left', 'leg_left'])
 ---
 
-<div class="nihss-wrapper">
-  <form id="nihss-form" novalidate>
-    <div class="progress-bar-wrap">
-      <p class="progress-info">
-        <span id="nihss-progress-count">0</span>&nbsp;{t("nihss.progress")}
+<div class='nihss-wrapper'>
+  <form id='nihss-form' novalidate>
+    <div class='progress-bar-wrap'>
+      <p class='progress-info'>
+        <span id='nihss-progress-count'>0</span>&nbsp;{t('nihss.progress')}
       </p>
-      <div class="progress-track">
-        <div class="progress-fill" id="nihss-progress-fill" style="width:0%"></div>
+      <div class='progress-track'>
+        <div class='progress-fill' id='nihss-progress-fill' style='width:0%'>
+        </div>
       </div>
     </div>
 
-    <div class="activities">
-      {nihssIndex.activities.map((activity, idx) => {
-        const isBilateralRight = bilateralRight.has(activity.id);
-        const isBilateralLeft  = bilateralLeft.has(activity.id);
+    <div class='activities'>
+      {
+        nihssIndex.activities.map((activity, idx) => {
+          const isBilateralRight = bilateralRight.has(activity.id)
+          const isBilateralLeft = bilateralLeft.has(activity.id)
 
-        return (
-          <fieldset
-            class={`activity-group${isBilateralRight ? ' bilateral-first' : ''}${isBilateralLeft ? ' bilateral-second' : ''}`}
-            style={`animation-delay: ${idx * 40}ms`}
-            data-activity={activity.id}
-          >
-            <legend class="activity-label">
-              <span class="activity-num">
-                {String(idx + 1).padStart(2, "0")}
-              </span>
-              {t(activity.labelKey)}
-            </legend>
+          return (
+            <fieldset
+              class={`activity-group${isBilateralRight ? ' bilateral-first' : ''}${isBilateralLeft ? ' bilateral-second' : ''}`}
+              style={`animation-delay: ${idx * 40}ms`}
+              data-activity={activity.id}
+            >
+              <legend class='activity-label'>
+                <span class='activity-num'>
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                {t(activity.labelKey)}
+              </legend>
 
-            {activity.noteKey && (
-              <p class="activity-note">{t(activity.noteKey)}</p>
-            )}
+              {activity.noteKey && (
+                <p class='activity-note'>{t(activity.noteKey)}</p>
+              )}
 
-            <div class="options">
-              {activity.options.map((opt) => (
-                <label class={`option-label${opt.excluded ? ' option-label--na' : ''}`}>
-                  <input
-                    type="radio"
-                    name={activity.id}
-                    value={String(opt.value)}
-                    class="option-radio"
-                  />
-                  <span class={`option-card${opt.excluded ? ' option-card--na' : ''}`}>
-                    <span class="option-score">{opt.excluded ? 'N/A' : opt.value}</span>
-                    <span class="option-text">{t(opt.labelKey)}</span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        );
-      })}
+              <div class='options'>
+                {activity.options.map((opt) => (
+                  <label
+                    class={`option-label${opt.excluded ? ' option-label--na' : ''}`}
+                  >
+                    <input
+                      type='radio'
+                      name={activity.id}
+                      value={String(opt.value)}
+                      class='option-radio'
+                    />
+                    <span
+                      class={`option-card${opt.excluded ? ' option-card--na' : ''}`}
+                    >
+                      <span class='option-score'>
+                        {opt.excluded ? 'N/A' : opt.value}
+                      </span>
+                      <span class='option-text'>{t(opt.labelKey)}</span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          )
+        })
+      }
     </div>
 
-    <div class="form-actions">
+    <div class='form-actions'>
       <button
-        type="submit"
-        id="nihss-calculate-btn"
-        class="btn-calculate"
+        type='submit'
+        id='nihss-calculate-btn'
+        class='btn-calculate'
         disabled
-        aria-describedby="nihss-calculate-hint"
+        aria-describedby='nihss-calculate-hint'
       >
-        {t("nihss.calculate")}
+        {t('nihss.calculate')}
       </button>
-      <p id="nihss-calculate-hint" class="calculate-hint">
-        {t("nihss.calculate-hint")}
+      <p id='nihss-calculate-hint' class='calculate-hint'>
+        {t('nihss.calculate-hint')}
       </p>
+      <p class='privacy-note'>{t('form.privacy')}</p>
     </div>
   </form>
 </div>
 
 <ScaleResultsCard
   maxScore={42}
-  maxLabel={t("nihss.results.max")}
-  scoreLabel={t("nihss.results.score")}
-  interpretationTitle={t("results.interpretation")}
-  rangesTitle={t("nihss.results.ranges")}
-  retakeLabel={t("results.retake")}
+  maxLabel={t('nihss.results.max')}
+  scoreLabel={t('nihss.results.score')}
+  interpretationTitle={t('results.interpretation')}
+  rangesTitle={t('nihss.results.ranges')}
+  retakeLabel={t('results.retake')}
   backHref={`/${lang}`}
-  backLabel={t("results.back")}
+  backLabel={t('results.back')}
   levels={nihssLevels}
   zones={nihssZones}
   gaugeMarks={[0, 4, 15, 20, 42]}
 />
 
 <script>
-  import { scoreNIHSS, nihssIndex } from "../scales/nihss";
+  import { scoreNIHSS, nihssIndex } from '../scales/nihss'
+  import { setupFormProgress } from '../utils/form'
 
   function initNIHSSForm() {
     setupFormProgress({
-      formId: "nihss-form",
-      calculateBtnId: "nihss-calculate-btn",
-      calculateHintId: "nihss-calculate-hint",
-      progressCountId: "nihss-progress-count",
-      progressFillId: "nihss-progress-fill",
+      formId: 'nihss-form',
+      calculateBtnId: 'nihss-calculate-btn',
+      calculateHintId: 'nihss-calculate-hint',
+      progressCountId: 'nihss-progress-count',
+      progressFillId: 'nihss-progress-fill',
       totalItems: nihssIndex.activities.length,
       onCalculate: (answers) => {
-        const result = scoreNIHSS(answers);
-        const form = document.getElementById("nihss-form");
-        if (form) form.hidden = true;
+        const result = scoreNIHSS(answers)
+        const form = document.getElementById('nihss-form')
+        if (form) form.hidden = true
         document.dispatchEvent(
-          new CustomEvent("scale:result", {
+          new CustomEvent('scale:result', {
             detail: { score: result.score, level: result.level },
-          }),
-        );
+          })
+        )
       },
-    });
+    })
   }
 
-  initNIHSSForm();
-  document.addEventListener("astro:after-swap", initNIHSSForm);
+  initNIHSSForm()
+  document.addEventListener('astro:after-swap', initNIHSSForm)
 </script>
 
 <style>
@@ -210,13 +251,15 @@ const bilateralLeft  = new Set(['arm_left', 'leg_left']);
 
   /* Bilateral items visually connected */
   .activity-group.bilateral-first {
-    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm)
+      var(--radius-sm);
     border-bottom-color: transparent;
     margin-bottom: 0;
   }
 
   .activity-group.bilateral-second {
-    border-radius: var(--radius-sm) var(--radius-sm) var(--radius-lg) var(--radius-lg);
+    border-radius: var(--radius-sm) var(--radius-sm) var(--radius-lg)
+      var(--radius-lg);
     border-top: 1px dashed var(--color-border);
     margin-top: 0;
   }
@@ -382,5 +425,11 @@ const bilateralLeft  = new Set(['arm_left', 'leg_left']);
   .calculate-hint {
     font-size: 0.8rem;
     color: var(--color-text-dim);
+  }
+
+  .privacy-note {
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+    margin-top: var(--s2);
   }
 </style>

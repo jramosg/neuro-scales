@@ -1,4 +1,4 @@
-import type { ScaleDefinition, ScaleResult, StrokeSeverity } from './types';
+import type { ScaleDefinition, ScaleResult, StrokeSeverity } from './types'
 
 export const nihssIndex: ScaleDefinition = {
   id: 'nihss',
@@ -188,34 +188,52 @@ export const nihssIndex: ScaleDefinition = {
       ],
     },
   ],
-};
+}
 
-const levelKeyMap: Record<StrokeSeverity, { levelKey: string; levelDescKey: string }> = {
-  normal:           { levelKey: 'nihss.result.normal',           levelDescKey: 'nihss.result.normal.desc' },
-  mild:             { levelKey: 'nihss.result.mild',             levelDescKey: 'nihss.result.mild.desc' },
-  moderate:         { levelKey: 'nihss.result.moderate',         levelDescKey: 'nihss.result.moderate.desc' },
-  moderate_severe:  { levelKey: 'nihss.result.moderate_severe',  levelDescKey: 'nihss.result.moderate_severe.desc' },
-  severe:           { levelKey: 'nihss.result.severe',           levelDescKey: 'nihss.result.severe.desc' },
-};
+const levelKeyMap: Record<
+  StrokeSeverity,
+  { levelKey: string; levelDescKey: string }
+> = {
+  normal: {
+    levelKey: 'nihss.result.normal',
+    levelDescKey: 'nihss.result.normal.desc',
+  },
+  mild: {
+    levelKey: 'nihss.result.mild',
+    levelDescKey: 'nihss.result.mild.desc',
+  },
+  moderate: {
+    levelKey: 'nihss.result.moderate',
+    levelDescKey: 'nihss.result.moderate.desc',
+  },
+  moderate_severe: {
+    levelKey: 'nihss.result.moderate_severe',
+    levelDescKey: 'nihss.result.moderate_severe.desc',
+  },
+  severe: {
+    levelKey: 'nihss.result.severe',
+    levelDescKey: 'nihss.result.severe.desc',
+  },
+}
 
 export function interpretNIHSS(score: number): StrokeSeverity {
-  if (score === 0) return 'normal';
-  if (score <= 4)  return 'mild';
-  if (score <= 15) return 'moderate';
-  if (score <= 20) return 'moderate_severe';
-  return 'severe';
+  if (score === 0) return 'normal'
+  if (score <= 4) return 'mild'
+  if (score <= 15) return 'moderate'
+  if (score <= 20) return 'moderate_severe'
+  return 'severe'
 }
 
 export function scoreNIHSS(answers: Record<string, number>): ScaleResult {
   const score = nihssIndex.activities.reduce((sum, activity) => {
-    const val = answers[activity.id];
-    if (val === undefined) return sum;
-    const opt = activity.options.find((o) => o.value === val);
-    if (opt?.excluded) return sum;
-    return sum + val;
-  }, 0);
+    const val = answers[activity.id]
+    if (val === undefined) return sum
+    const opt = activity.options.find((o) => o.value === val)
+    if (opt?.excluded) return sum
+    return sum + val
+  }, 0)
 
-  const level = interpretNIHSS(score);
-  const { levelKey, levelDescKey } = levelKeyMap[level];
-  return { score, maxScore: nihssIndex.maxScore, level, levelKey, levelDescKey };
+  const level = interpretNIHSS(score)
+  const { levelKey, levelDescKey } = levelKeyMap[level]
+  return { score, maxScore: nihssIndex.maxScore, level, levelKey, levelDescKey }
 }

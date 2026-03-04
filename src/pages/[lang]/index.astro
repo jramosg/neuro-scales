@@ -1,39 +1,47 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ScaleCard from '../../components/ScaleCard.astro';
-import { getStaticLangPaths, getLangFromUrl, useTranslations } from '../../i18n/utils';
-import { scales } from '../../scales/registry';
+import Layout from '../../layouts/Layout.astro'
+import ScaleCard from '../../components/ScaleCard.astro'
+import {
+  getStaticLangPaths,
+  getLangFromUrl,
+  useTranslations,
+} from '../../i18n/utils'
+import { scales } from '../../scales/registry'
 
 export function getStaticPaths() {
-  return getStaticLangPaths();
+  return getStaticLangPaths()
 }
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
 <Layout title={t('index.title')} description={t('index.subtitle')}>
-  <div class="page">
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-badge">{lang === 'es' ? 'Neurología Clínica' : 'Neurologia Klinikoa'}</div>
-        <h1 class="hero-title">{t('index.title')}</h1>
-        <p class="hero-subtitle">{t('index.subtitle')}</p>
+  <div class='page'>
+    <section class='hero'>
+      <div class='hero-inner'>
+        <div class='hero-badge'>
+          {lang === 'es' ? 'Neurología Clínica' : 'Neurologia Klinikoa'}
+        </div>
+        <h1 class='hero-title'>{t('index.title')}</h1>
+        <p class='hero-subtitle'>{t('index.subtitle')}</p>
       </div>
     </section>
 
-    <section class="scales-section">
-      <h2 class="section-label">{t('index.select-scale')}</h2>
-      <div class="scale-grid">
-        {scales.map((scale) => (
-          <ScaleCard
-            title={t(scale.titleKey)}
-            subtitle={t(scale.subtitleKey)}
-            description={t(scale.descriptionKey)}
-            href={`/${lang}/scales/${scale.id}`}
-            badge={scale.badge}
-          />
-        ))}
+    <section class='scales-section'>
+      <h2 class='section-label'>{t('index.select-scale')}</h2>
+      <div class='scale-grid'>
+        {
+          scales.map((scale) => (
+            <ScaleCard
+              title={t(scale.titleKey)}
+              subtitle={t(scale.subtitleKey)}
+              description={t(scale.descriptionKey)}
+              href={`/${lang}/scales/${scale.id}`}
+              badge={scale.badge}
+            />
+          ))
+        }
       </div>
     </section>
   </div>
@@ -74,7 +82,11 @@ const t = useTranslations(lang);
     font-size: clamp(2rem, 5vw, 3.25rem);
     color: var(--color-text);
     margin-bottom: var(--s4);
-    background: linear-gradient(135deg, var(--color-text) 40%, var(--color-accent));
+    background: linear-gradient(
+      135deg,
+      var(--color-text) 40%,
+      var(--color-accent)
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
