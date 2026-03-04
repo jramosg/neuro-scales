@@ -105,66 +105,23 @@ const barthelZones: Zone[] = [
   import { scoreBarthel, barthelIndex } from "../scales/barthel";
 
   function initBarthelForm() {
-    const form = document.getElementById("barthel-form") as HTMLFormElement | null;
-    if (!form) return;
-
-    const calculateBtn = document.getElementById("calculate-btn") as HTMLButtonElement;
-    const calculateHint = document.getElementById("calculate-hint") as HTMLElement;
-    const progressCount = document.getElementById("progress-count") as HTMLElement;
-    const progressFill = document.getElementById("progress-fill") as HTMLElement;
-    const totalActivities = barthelIndex.activities.length;
-    const answers: Record<string, number> = {};
-
-    function getAnsweredCount(): number {
-      return Object.keys(answers).length;
-    }
-
-    function updateProgress() {
-      const count = getAnsweredCount();
-      const pct = (count / totalActivities) * 100;
-      progressCount.textContent = String(count);
-      progressFill.style.width = `${pct}%`;
-
-      if (count === totalActivities) {
-        calculateBtn.disabled = false;
-        calculateHint.hidden = true;
-      } else {
-        calculateBtn.disabled = true;
-        calculateHint.hidden = false;
-      }
-    }
-
-    form.addEventListener("change", (e) => {
-      const input = e.target as HTMLInputElement;
-      if (input.type === "radio") {
-        answers[input.name] = Number(input.value);
-        const fieldset = input.closest("fieldset");
-        fieldset?.querySelectorAll(".option-card").forEach((card) => {
-          card.classList.remove("selected");
-        });
-        input.parentElement?.querySelector(".option-card")?.classList.add("selected");
-        updateProgress();
-      }
-    });
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (getAnsweredCount() < totalActivities) return;
-
-      const result = scoreBarthel(answers);
-      form.hidden = true;
-      document.dispatchEvent(
-        new CustomEvent("scale:result", { detail: { score: result.score, level: result.level } })
-      );
-    });
-
-    document.addEventListener("scale:retake", () => {
-      form.reset();
-      Object.keys(answers).forEach((k) => delete answers[k]);
-      document.querySelectorAll(".option-card").forEach((c) => c.classList.remove("selected"));
-      updateProgress();
-      form.hidden = false;
-      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    setupFormProgress({
+      formId: "barthel-form",
+      calculateBtnId: "calculate-btn",
+      calculateHintId: "calculate-hint",
+      progressCountId: "progress-count",
+      progressFillId: "progress-fill",
+      totalItems: barthelIndex.activities.length,
+      onCalculate: (answers) => {
+        const result = scoreBarthel(answers);
+        const form = document.getElementById("barthel-form");
+        if (form) form.hidden = true;
+        document.dispatchEvent(
+          new CustomEvent("scale:result", {
+            detail: { score: result.score, level: result.level },
+          }),
+        );
+      },
     });
   }
 
