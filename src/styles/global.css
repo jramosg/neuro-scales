@@ -165,6 +165,21 @@ button {
   cursor: pointer;
 }
 
+/* ── Container ── */
+.container {
+  margin: 0 auto;
+}
+
+.container--xl {
+  max-width: 900px;
+  padding-block: var(--s8);
+}
+
+.container--md {
+  max-width: 760px;
+  padding-block: var(--s6);
+}
+
 /* Utility */
 .sr-only {
   position: absolute;

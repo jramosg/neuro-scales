@@ -18,26 +18,16 @@ const t = useTranslations(lang)
 ---
 
 <Layout title={t('gcs.title')} description={t('gcs.description')}>
-  <div class='page'>
-    <ScalePageHeader
-      lang={lang}
-      homeLabel={t('nav.home')}
-      badge='GCS'
-      meta1={`${gcsIndex.activities.length} ${lang === 'es' ? 'ítems' : 'item'}`}
-      meta2={lang === 'es' ? 'Puntuación 3–15' : 'Puntuazioa 3–15'}
-      title={t('gcs.title')}
-      subtitle={t('gcs.subtitle')}
-      instructions={t('gcs.instructions')}
-    />
+  <ScalePageHeader
+    lang={lang}
+    homeLabel={t('nav.home')}
+    badge='GCS'
+    meta1={`${gcsIndex.activities.length} ${lang === 'es' ? 'ítems' : 'item'}`}
+    meta2={lang === 'es' ? 'Puntuación 3–15' : 'Puntuazioa 3–15'}
+    title={t('gcs.title')}
+    subtitle={t('gcs.subtitle')}
+    instructions={t('gcs.instructions')}
+  />
 
-    <GCSForm />
-  </div>
+  <GCSForm />
 </Layout>
-
-<style>
-  .page {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: var(--s6) 0;
-  }
-</style>

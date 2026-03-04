@@ -8,9 +8,10 @@ import { getLangFromUrl } from '../i18n/utils'
 interface Props {
   title: string
   description?: string
+  container?: 'xl' | 'md'
 }
 
-const { title, description } = Astro.props
+const { title, description, container = 'md' } = Astro.props
 const lang = getLangFromUrl(Astro.url)
 ---
 
@@ -28,7 +29,7 @@ const lang = getLangFromUrl(Astro.url)
   </head>
   <body>
     <Header />
-    <main>
+    <main class={`container container--${container}`}>
       <slot />
     </main>
     <Footer />
@@ -38,6 +39,6 @@ const lang = getLangFromUrl(Astro.url)
 <style>
   main {
     min-height: calc(100dvh - 64px - 80px);
-    padding: 0 var(--s4);
+    padding-inline: var(--s4);
   }
 </style>

@@ -18,26 +18,16 @@ const t = useTranslations(lang)
 ---
 
 <Layout title={t('fisher.title')} description={t('fisher.description')}>
-  <div class='page'>
-    <ScalePageHeader
-      lang={lang}
-      homeLabel={t('nav.home')}
-      badge={fisherIndex.badge}
-      meta1={lang === 'es' ? '5 grados (0–IV)' : '5 gradu (0–IV)'}
-      meta2={lang === 'es' ? 'HSA · Vasoespasmo' : 'HSA · Basoespasmo'}
-      title={t('fisher.title')}
-      subtitle={t('fisher.subtitle')}
-      instructions={t('fisher.instructions')}
-    />
+  <ScalePageHeader
+    lang={lang}
+    homeLabel={t('nav.home')}
+    badge={fisherIndex.badge}
+    meta1={lang === 'es' ? '5 grados (0–IV)' : '5 gradu (0–IV)'}
+    meta2={lang === 'es' ? 'HSA · Vasoespasmo' : 'HSA · Basoespasmo'}
+    title={t('fisher.title')}
+    subtitle={t('fisher.subtitle')}
+    instructions={t('fisher.instructions')}
+  />
 
-    <FisherForm />
-  </div>
+  <FisherForm />
 </Layout>
-
-<style>
-  .page {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: var(--s6) 0;
-  }
-</style>

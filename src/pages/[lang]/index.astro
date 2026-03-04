@@ -16,44 +16,40 @@ const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 ---
 
-<Layout title={t('index.title')} description={t('index.subtitle')}>
-  <div class='page'>
-    <section class='hero'>
-      <div class='hero-inner'>
-        <div class='hero-badge'>
-          {lang === 'es' ? 'Neurología Clínica' : 'Neurologia Klinikoa'}
-        </div>
-        <h1 class='hero-title'>{t('index.title')}</h1>
-        <p class='hero-subtitle'>{t('index.subtitle')}</p>
+<Layout
+  title={t('index.title')}
+  description={t('index.subtitle')}
+  container='xl'
+>
+  <section class='hero'>
+    <div class='hero-inner'>
+      <div class='hero-badge'>
+        {lang === 'es' ? 'Neurología Clínica' : 'Neurologia Klinikoa'}
       </div>
-    </section>
+      <h1 class='hero-title'>{t('index.title')}</h1>
+      <p class='hero-subtitle'>{t('index.subtitle')}</p>
+    </div>
+  </section>
 
-    <section class='scales-section'>
-      <h2 class='section-label'>{t('index.select-scale')}</h2>
-      <div class='scale-grid'>
-        {
-          scales.map((scale) => (
-            <ScaleCard
-              title={t(scale.titleKey)}
-              subtitle={t(scale.subtitleKey)}
-              description={t(scale.descriptionKey)}
-              href={`/${lang}/scales/${scale.id}`}
-              badge={scale.badge}
-            />
-          ))
-        }
-      </div>
-    </section>
-  </div>
+  <section class='scales-section'>
+    <h2 class='section-label'>{t('index.select-scale')}</h2>
+    <div class='scale-grid'>
+      {
+        scales.map((scale) => (
+          <ScaleCard
+            title={t(scale.titleKey)}
+            subtitle={t(scale.subtitleKey)}
+            description={t(scale.descriptionKey)}
+            href={`/${lang}/scales/${scale.id}`}
+            badge={scale.badge}
+          />
+        ))
+      }
+    </div>
+  </section>
 </Layout>
 
 <style>
-  .page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: var(--s8) 0;
-  }
-
   /* ── Hero ── */
   .hero {
     padding: var(--s8) 0 var(--s9);
