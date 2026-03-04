@@ -10,12 +10,15 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check": "astro check --minimumFailingSeverity warning "
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@fontsource/dm-serif-display": "^5.2.8",
     "@fontsource/libre-franklin": "^5.2.8",
-    "astro": "^5.17.1"
+    "astro": "^5.17.1",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "prettier": "^3.8.1",
