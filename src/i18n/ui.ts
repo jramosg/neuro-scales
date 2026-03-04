@@ -337,6 +337,118 @@ export const ui: Record<Langs, Record<string, string>> = {
     'gcs.results.range.mild': '13–15 — Coma leve',
     'gcs.results.range.moderate': '9–12 — Coma moderado',
     'gcs.results.range.severe': '3–8 — Coma grave',
+
+    // Fisher Modified scale meta
+    'fisher.title': 'Escala de Fisher Modificada',
+    'fisher.subtitle': 'Hemorragia subaracnoidea — riesgo de vasoespasmo',
+    'fisher.description':
+      'Clasifica la hemorragia subaracnoidea (HSA) en el TAC craneal según la distribución hemorrágica, la formación de coágulos y la presencia de sangrado intraventricular. Predice el riesgo de vasoespasmo cerebral e isquemia tardía.',
+    'fisher.instructions':
+      'Revise el TAC craneal y seleccione el grado que mejor describe los hallazgos. La formación de coágulos (>1 mm en plano coronal o >3×5 mm en plano axial) y/o el sangrado intraventricular determinan el grado de riesgo.',
+    'fisher.progress': 'de 1 ítem valorado',
+    'fisher.calculate': 'Clasificar grado Fisher',
+    'fisher.calculate-hint': 'Seleccione el grado correspondiente al TAC',
+
+    // Fisher grade activity
+    'fisher.grade.label': 'Grado de Fisher Modificado',
+    'fisher.grade.note':
+      'Evalúe: (1) presencia de HSA, (2) formación de coágulos densos >1 mm en plano coronal o >3×5 mm en plano axial, (3) sangrado intraventricular.',
+    'fisher.grade.opt-0':
+      'Grado 0 — Sin hemorragia subaracnoidea ni intraventricular',
+    'fisher.grade.opt-1':
+      'Grado I — HSA focal o difusa, sin coágulos y sin hemorragia intraventricular. Riesgo bajo de vasoespasmo.',
+    'fisher.grade.opt-2':
+      'Grado II — HSA focal o difusa, sin coágulos, con hemorragia intraventricular. Riesgo intermedio de vasoespasmo.',
+    'fisher.grade.opt-3':
+      'Grado III — HSA focal o difusa, con coágulos, sin hemorragia intraventricular. Riesgo intermedio de vasoespasmo.',
+    'fisher.grade.opt-4':
+      'Grado IV — HSA focal o difusa, con coágulos y hemorragia intraventricular. Riesgo alto de vasoespasmo.',
+
+    // Fisher result levels
+    'fisher.result.grade_0': 'Fisher Modificado — Grado 0',
+    'fisher.result.grade_0.desc':
+      'Sin hemorragia subaracnoidea ni intraventricular. Riesgo muy bajo de vasoespasmo cerebral.',
+    'fisher.result.grade_1': 'Fisher Modificado — Grado I',
+    'fisher.result.grade_1.desc':
+      'HSA focal o difusa sin coágulos ni hemorragia intraventricular. Riesgo bajo de vasoespasmo sintomático.',
+    'fisher.result.grade_2': 'Fisher Modificado — Grado II',
+    'fisher.result.grade_2.desc':
+      'HSA sin coágulos pero con hemorragia intraventricular. Riesgo intermedio de isquemia cerebral tardía por vasoespasmo.',
+    'fisher.result.grade_3': 'Fisher Modificado — Grado III',
+    'fisher.result.grade_3.desc':
+      'HSA con coágulos sin hemorragia intraventricular. Riesgo intermedio de isquemia cerebral tardía por vasoespasmo.',
+    'fisher.result.grade_4': 'Fisher Modificado — Grado IV',
+    'fisher.result.grade_4.desc':
+      'HSA con coágulos y hemorragia intraventricular. Riesgo alto de vasoespasmo sintomático e isquemia cerebral tardía.',
+
+    // Fisher results display
+    'fisher.results.max': 'de 4 (grado máximo)',
+    'fisher.results.score': 'Grado Fisher Modificado',
+    'fisher.results.ranges': 'Riesgo de vasoespasmo',
+    'fisher.results.range.grade_0': 'Grado 0 — Sin HSA',
+    'fisher.results.range.grade_1': 'Grado I — Riesgo bajo',
+    'fisher.results.range.grade_2': 'Grado II — Riesgo intermedio',
+    'fisher.results.range.grade_3': 'Grado III — Riesgo intermedio',
+    'fisher.results.range.grade_4': 'Grado IV — Riesgo alto',
+
+    // Marshall scale meta
+    'marshall.title': 'Escala de Marshall',
+    'marshall.subtitle': 'Clasificación radiológica del TCE',
+    'marshall.description':
+      'Clasifica el traumatismo craneoencefálico (TCE) según los hallazgos en el TAC craneal, relacionando el patrón lesional con el riesgo de hipertensión intracraneal y la morbimortalidad asociada. Escala creada en 1991.',
+    'marshall.instructions':
+      'Revise el TAC craneal y seleccione el grado que mejor describe los hallazgos. Evalúe: presencia de lesiones focales, volumen lesional, estado de las cisternas de la base y desplazamiento de la línea media.',
+    'marshall.progress': 'de 1 ítem valorado',
+    'marshall.calculate': 'Clasificar grado Marshall',
+    'marshall.calculate-hint': 'Seleccione el grado correspondiente al TAC',
+
+    // Marshall grade activity
+    'marshall.grade.label': 'Grado de Marshall',
+    'marshall.grade.note':
+      'Evalúe en el TAC: (1) presencia de lesiones focales hiperdensas, (2) volumen de la lesión (<25 cc o >25 cc), (3) cisternas de la base (preservadas / comprimidas), (4) desplazamiento de la línea media (>5 mm), (5) si la lesión fue evacuada quirúrgicamente.',
+    'marshall.grade.opt-1':
+      'Grado I (lesión difusa I) — Sin patología intracraneal visible en el TAC',
+    'marshall.grade.opt-2':
+      'Grado II (lesión difusa II) — Lesión/es focales hiperdensas <25 cc; cisternas de la base preservadas; sin desplazamiento de línea media >5 mm',
+    'marshall.grade.opt-3':
+      'Grado III (lesión difusa III) — Lesión/es focales hiperdensas <25 cc; cisternas de la base colapsadas o comprimidas; sin desplazamiento de línea media >5 mm',
+    'marshall.grade.opt-4':
+      'Grado IV (lesión difusa IV) — Lesión/es focales hiperdensas <25 cc; con desplazamiento de la línea media >5 mm',
+    'marshall.grade.opt-5':
+      'Grado V (masa evacuada) — Cualquier lesión traumática evacuada quirúrgicamente',
+    'marshall.grade.opt-6':
+      'Grado VI (masa no evacuada) — Lesión/es focales hiperdensas de volumen >25 cc no evacuadas',
+
+    // Marshall result levels
+    'marshall.result.grade_1': 'Marshall Grado I',
+    'marshall.result.grade_1.desc':
+      'Sin patología intracraneal visible. Menor riesgo de hipertensión intracraneal en el contexto del TCE.',
+    'marshall.result.grade_2': 'Marshall Grado II',
+    'marshall.result.grade_2.desc':
+      'Lesión difusa leve. Cisternas basales preservadas sin desplazamiento significativo de la línea media.',
+    'marshall.result.grade_3': 'Marshall Grado III',
+    'marshall.result.grade_3.desc':
+      'Lesión difusa moderada. Compresión de cisternas basales con riesgo elevado de hipertensión intracraneal.',
+    'marshall.result.grade_4': 'Marshall Grado IV',
+    'marshall.result.grade_4.desc':
+      'Lesión difusa grave. Desplazamiento de la línea media indicativo de efecto masa significativo con riesgo alto de herniación.',
+    'marshall.result.grade_5': 'Marshall Grado V',
+    'marshall.result.grade_5.desc':
+      'Lesión evacuada quirúrgicamente. La presencia de HSA traumática concomitante es un factor agravante del pronóstico.',
+    'marshall.result.grade_6': 'Marshall Grado VI',
+    'marshall.result.grade_6.desc':
+      'Masa no evacuada de gran volumen (>25 cc). Alto riesgo de herniación cerebral y mortalidad elevada.',
+
+    // Marshall results display
+    'marshall.results.max': 'de 6 (grado máximo)',
+    'marshall.results.score': 'Grado Marshall',
+    'marshall.results.ranges': 'Clasificación de la lesión',
+    'marshall.results.range.grade_1': 'Grado I — Sin patología visible',
+    'marshall.results.range.grade_2': 'Grado II — Lesión difusa leve',
+    'marshall.results.range.grade_3': 'Grado III — Lesión difusa moderada',
+    'marshall.results.range.grade_4': 'Grado IV — Lesión difusa grave',
+    'marshall.results.range.grade_5': 'Grado V — Masa evacuada',
+    'marshall.results.range.grade_6': 'Grado VI — Masa no evacuada',
   },
 
   eu: {
@@ -683,5 +795,117 @@ export const ui: Record<Langs, Record<string, string>> = {
     'gcs.results.range.mild': '13–15 — Koma arina',
     'gcs.results.range.moderate': '9–12 — Koma moderatua',
     'gcs.results.range.severe': '3–8 — Koma larria',
+
+    // Fisher Aldatua eskala meta
+    'fisher.title': 'Fisher Eskala Aldatua',
+    'fisher.subtitle': 'Hemorragia subaraknoideoa — basoespasmoaren arriskua',
+    'fisher.description':
+      'Hemorragia subaraknoideoa (HSA) TAC kranealean sailkatzen du odol-banaketaren, koaguluen formazioaren eta intrabentricular hemorragiaren presentziaren arabera. Zerebral basoespasmoaren eta iskemia tardioaren arriskua aurreikusten du.',
+    'fisher.instructions':
+      'Aztertu TAC kraneala eta hallazgoak ondoen deskribatzen dituen gradua hautatu. Koaguluen formazioak (>1 mm koronalean edo >3×5 mm axialean) eta/edo intrabentricular hemorragiak gradua eta arriskua zehazten dute.',
+    'fisher.progress': '1 itemetatik baloratuta',
+    'fisher.calculate': 'Fisher gradua sailkatu',
+    'fisher.calculate-hint': 'Hautatu TACi dagokion gradua',
+
+    // Fisher grade jarduera
+    'fisher.grade.label': 'Fisher Aldatuaren Gradua',
+    'fisher.grade.note':
+      'Ebaluatu: (1) HSA presentzia, (2) koagulu dentsoen formazioa >1 mm koronalean edo >3×5 mm axialean, (3) intrabentricular hemorragia.',
+    'fisher.grade.opt-0':
+      '0 Gradua — HSA eta intrabentricular hemorragia gabe',
+    'fisher.grade.opt-1':
+      'I Gradua — HSA fokal edo difusoa, koagulurik gabe eta intrabentricular hemorragia gabe. Basoespasmoaren arrisku baxua.',
+    'fisher.grade.opt-2':
+      'II Gradua — HSA fokal edo difusoa, koagulurik gabe, intrabentricular hemorragiarekin. Basoespasmoaren arrisku ertaina.',
+    'fisher.grade.opt-3':
+      'III Gradua — HSA fokal edo difusoa, koaguluekin, intrabentricular hemorragia gabe. Basoespasmoaren arrisku ertaina.',
+    'fisher.grade.opt-4':
+      'IV Gradua — HSA fokal edo difusoa, koaguluekin eta intrabentricular hemorragiarekin. Basoespasmoaren arrisku altua.',
+
+    // Fisher emaitza mailak
+    'fisher.result.grade_0': 'Fisher Aldatua — 0 Gradua',
+    'fisher.result.grade_0.desc':
+      'HSA eta intrabentricular hemorragia gabe. Zerebral basoespasmoaren arrisku oso baxua.',
+    'fisher.result.grade_1': 'Fisher Aldatua — I Gradua',
+    'fisher.result.grade_1.desc':
+      'HSA fokal edo difusoa koagulurik eta intrabentricular hemorragia gabe. Basoespasmo sintomatikoaren arrisku baxua.',
+    'fisher.result.grade_2': 'Fisher Aldatua — II Gradua',
+    'fisher.result.grade_2.desc':
+      'HSA koagulurik gabe baina intrabentricular hemorragiarekin. Basoespasmoaren ondoriozko zerebral iskemia tardioaren arrisku ertaina.',
+    'fisher.result.grade_3': 'Fisher Aldatua — III Gradua',
+    'fisher.result.grade_3.desc':
+      'HSA koaguluekin intrabentricular hemorragia gabe. Basoespasmoaren ondoriozko zerebral iskemia tardioaren arrisku ertaina.',
+    'fisher.result.grade_4': 'Fisher Aldatua — IV Gradua',
+    'fisher.result.grade_4.desc':
+      'HSA koaguluekin eta intrabentricular hemorragiarekin. Basoespasmo sintomatikoaren eta zerebral iskemia tardioaren arrisku altua.',
+
+    // Fisher emaitzen erakustea
+    'fisher.results.max': '4tik (gehieneko gradua)',
+    'fisher.results.score': 'Fisher Aldatuaren Gradua',
+    'fisher.results.ranges': 'Basoespasmoaren arriskua',
+    'fisher.results.range.grade_0': '0 Gradua — HSA gabe',
+    'fisher.results.range.grade_1': 'I Gradua — Arrisku baxua',
+    'fisher.results.range.grade_2': 'II Gradua — Arrisku ertaina',
+    'fisher.results.range.grade_3': 'III Gradua — Arrisku ertaina',
+    'fisher.results.range.grade_4': 'IV Gradua — Arrisku altua',
+
+    // Marshall eskala meta
+    'marshall.title': 'Marshall Eskala',
+    'marshall.subtitle': 'KTEaren sailkapen erradiologikoa',
+    'marshall.description':
+      'Traumatismo kraneoentzefalikoa (KTE) TAC kranealeko hallazgoen arabera sailkatzen du, lesio-eredua intrakraneal hipertentsioaren arriskuarekin eta morbi-mortalitatearekin erlazionatuz. 1991n sortutako eskala.',
+    'marshall.instructions':
+      'Aztertu TAC kraneala eta hallazgoak ondoen deskribatzen dituen gradua hautatu. Ebaluatu: lesio fokalak, lesioen bolumena, oinarrizko zisternaren egoera eta lerro-erdiko desplazamendua.',
+    'marshall.progress': '1 itemetatik baloratuta',
+    'marshall.calculate': 'Marshall gradua sailkatu',
+    'marshall.calculate-hint': 'Hautatu TACi dagokion gradua',
+
+    // Marshall grade jarduera
+    'marshall.grade.label': 'Marshall Gradua',
+    'marshall.grade.note':
+      'Ebaluatu TACean: (1) lesio fokal hiperdentsoak, (2) lesioaren bolumena (<25 cc edo >25 cc), (3) oinarrizko zisternak (kontserbatuak / konprimitua), (4) lerro-erdiko desplazamendua (>5 mm), (5) lesioa kirurgikoki ebakuatu ote den.',
+    'marshall.grade.opt-1':
+      'I Gradua (lesio difuso I) — Lesio intrakraneal nabarmenik gabe TACean',
+    'marshall.grade.opt-2':
+      'II Gradua (lesio difuso II) — Lesio fokal hiperdenso/ak <25 cc; oinarrizko zisternak kontserbatuak; lerro-erdiko desplazamendurik gabe >5 mm',
+    'marshall.grade.opt-3':
+      'III Gradua (lesio difuso III) — Lesio fokal hiperdenso/ak <25 cc; oinarrizko zisternak kolapsatuak edo konprimitua; lerro-erdiko desplazamendurik gabe >5 mm',
+    'marshall.grade.opt-4':
+      'IV Gradua (lesio difuso IV) — Lesio fokal hiperdenso/ak <25 cc; lerro-erdiko desplazamendua >5 mm',
+    'marshall.grade.opt-5':
+      'V Gradua (ebakuatutako masa) — Kirurgikoki ebakuatutako traumatismo lesio oro',
+    'marshall.grade.opt-6':
+      'VI Gradua (ebakuatu gabeko masa) — Lesio fokal hiperdenso/ak >25 cc bolumenarekin, ebakuatu gabe',
+
+    // Marshall emaitza mailak
+    'marshall.result.grade_1': 'Marshall I Gradua',
+    'marshall.result.grade_1.desc':
+      'Lesio intrakraneal nabarmenik gabe. KTEaren testuinguruan intrakraneal hipertentsioaren arrisku txikiena.',
+    'marshall.result.grade_2': 'Marshall II Gradua',
+    'marshall.result.grade_2.desc':
+      'Lesio difuso arina. Oinarrizko zisternak kontserbatuak lerro-erdiko desplazamendu nabarmenik gabe.',
+    'marshall.result.grade_3': 'Marshall III Gradua',
+    'marshall.result.grade_3.desc':
+      'Lesio difuso moderatua. Oinarrizko zisternetan konpromisoa intrakraneal hipertentsioaren arrisku altuarekin.',
+    'marshall.result.grade_4': 'Marshall IV Gradua',
+    'marshall.result.grade_4.desc':
+      'Lesio difuso larria. Lerro-erdiko desplazamendua masa-efektu garrantzitsuaren adierazle, herniazioaren arrisku altuarekin.',
+    'marshall.result.grade_5': 'Marshall V Gradua',
+    'marshall.result.grade_5.desc':
+      'Kirurgikoki ebakuatutako lesioa. Pronostikoa aldakorra lesioaren hedapenaren eta tratamenduaren erantzunaren arabera.',
+    'marshall.result.grade_6': 'Marshall VI Gradua',
+    'marshall.result.grade_6.desc':
+      'Ebakuatu gabeko bolumen handiko masa (>25 cc). Zerebral herniazioaren arrisku altua eta hilkortasun handia.',
+
+    // Marshall emaitzen erakustea
+    'marshall.results.max': '6tik (gehieneko gradua)',
+    'marshall.results.score': 'Marshall Gradua',
+    'marshall.results.ranges': 'Lesioaren sailkapena',
+    'marshall.results.range.grade_1': 'I Gradua — Patologiarik ez',
+    'marshall.results.range.grade_2': 'II Gradua — Lesio difuso arina',
+    'marshall.results.range.grade_3': 'III Gradua — Lesio difuso moderatua',
+    'marshall.results.range.grade_4': 'IV Gradua — Lesio difuso larria',
+    'marshall.results.range.grade_5': 'V Gradua — Ebakuatutako masa',
+    'marshall.results.range.grade_6': 'VI Gradua — Ebakuatu gabeko masa',
   },
 }

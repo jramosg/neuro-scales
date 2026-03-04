@@ -1,0 +1,375 @@
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils'
+import { marshallIndex } from '@scales/marshall'
+import FormProgressBar from '@components/FormProgressBar.astro'
+import ScaleResultsCard from '@components/ScaleResultsCard.astro'
+import type { LevelInfo, Zone } from '@components/ScaleResultsCard.astro'
+
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+
+const marshallLevels: LevelInfo[] = [
+  {
+    key: 'grade_1',
+    label: t('marshall.result.grade_1'),
+    desc: t('marshall.result.grade_1.desc'),
+    colorIndex: 0,
+  },
+  {
+    key: 'grade_2',
+    label: t('marshall.result.grade_2'),
+    desc: t('marshall.result.grade_2.desc'),
+    colorIndex: 1,
+  },
+  {
+    key: 'grade_3',
+    label: t('marshall.result.grade_3'),
+    desc: t('marshall.result.grade_3.desc'),
+    colorIndex: 2,
+  },
+  {
+    key: 'grade_4',
+    label: t('marshall.result.grade_4'),
+    desc: t('marshall.result.grade_4.desc'),
+    colorIndex: 3,
+  },
+  {
+    key: 'grade_5',
+    label: t('marshall.result.grade_5'),
+    desc: t('marshall.result.grade_5.desc'),
+    colorIndex: 3,
+  },
+  {
+    key: 'grade_6',
+    label: t('marshall.result.grade_6'),
+    desc: t('marshall.result.grade_6.desc'),
+    colorIndex: 4,
+  },
+]
+
+const marshallZones: Zone[] = [
+  {
+    from: 1,
+    to: 1,
+    colorIndex: 0,
+    label: t('marshall.results.range.grade_1'),
+  },
+  {
+    from: 2,
+    to: 2,
+    colorIndex: 1,
+    label: t('marshall.results.range.grade_2'),
+  },
+  {
+    from: 3,
+    to: 3,
+    colorIndex: 2,
+    label: t('marshall.results.range.grade_3'),
+  },
+  {
+    from: 4,
+    to: 4,
+    colorIndex: 3,
+    label: t('marshall.results.range.grade_4'),
+  },
+  {
+    from: 5,
+    to: 5,
+    colorIndex: 3,
+    label: t('marshall.results.range.grade_5'),
+  },
+  {
+    from: 6,
+    to: 6,
+    colorIndex: 4,
+    label: t('marshall.results.range.grade_6'),
+  },
+]
+---
+
+<div class='marshall-wrapper'>
+  <form id='marshall-form' novalidate>
+    <FormProgressBar
+      countId='marshall-progress-count'
+      fillId='marshall-progress-fill'
+      label={t('marshall.progress')}
+    />
+
+    <div class='activities'>
+      {
+        marshallIndex.activities.map((activity, idx) => (
+          <fieldset
+            class='activity-group'
+            style={`animation-delay: ${idx * 60}ms`}
+            data-activity={activity.id}
+          >
+            <legend class='activity-label'>
+              <span class='activity-num'>
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              {t(activity.labelKey)}
+            </legend>
+
+            {activity.noteKey && (
+              <p class='activity-note'>{t(activity.noteKey)}</p>
+            )}
+
+            <div class='options'>
+              {activity.options.map((opt) => (
+                <label class='option-label'>
+                  <input
+                    type='radio'
+                    name={activity.id}
+                    value={String(opt.value)}
+                    class='option-radio'
+                  />
+                  <span class='option-card'>
+                    <span class='option-score'>{opt.value}</span>
+                    <span class='option-text'>{t(opt.labelKey)}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))
+      }
+    </div>
+
+    <div class='form-actions'>
+      <button
+        type='submit'
+        id='marshall-calculate-btn'
+        class='btn-calculate'
+        disabled
+        aria-describedby='marshall-calculate-hint'
+      >
+        {t('marshall.calculate')}
+      </button>
+      <p id='marshall-calculate-hint' class='calculate-hint'>
+        {t('marshall.calculate-hint')}
+      </p>
+      <p class='privacy-note'>{t('form.privacy')}</p>
+    </div>
+  </form>
+</div>
+
+<ScaleResultsCard
+  maxScore={6}
+  maxLabel={t('marshall.results.max')}
+  scoreLabel={t('marshall.results.score')}
+  interpretationTitle={t('results.interpretation')}
+  rangesTitle={t('marshall.results.ranges')}
+  retakeLabel={t('results.retake')}
+  backHref={`/${lang}`}
+  backLabel={t('results.back')}
+  levels={marshallLevels}
+  zones={marshallZones}
+  gaugeMarks={[1, 2, 3, 4, 5, 6]}
+/>
+
+<script>
+  import { scoreMarshall, marshallIndex } from '../scales/marshall'
+  import { setupFormProgress } from '../utils/form'
+
+  function initMarshallForm() {
+    setupFormProgress({
+      formId: 'marshall-form',
+      calculateBtnId: 'marshall-calculate-btn',
+      calculateHintId: 'marshall-calculate-hint',
+      progressCountId: 'marshall-progress-count',
+      progressFillId: 'marshall-progress-fill',
+      totalItems: marshallIndex.activities.length,
+      onCalculate: (answers) => {
+        const result = scoreMarshall(answers)
+        const form = document.getElementById('marshall-form')
+        if (form) form.hidden = true
+        document.dispatchEvent(
+          new CustomEvent('scale:result', {
+            detail: { score: result.score, level: result.level },
+          })
+        )
+      },
+    })
+  }
+
+  initMarshallForm()
+  document.addEventListener('astro:after-swap', initMarshallForm)
+</script>
+
+<style>
+  .marshall-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--s6) 0 var(--s4);
+  }
+
+  /* ── Activities ── */
+  .activities {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4);
+  }
+
+  .activity-group {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--s5);
+    background: var(--color-surface);
+    animation: fadeUp 400ms ease both;
+    transition: border-color var(--transition-fast);
+  }
+
+  .activity-group:focus-within {
+    border-color: var(--color-teal);
+  }
+
+  .activity-label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s3);
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-text);
+    margin-bottom: var(--s2);
+    width: 100%;
+  }
+
+  .activity-num {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-text-dim);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .activity-note {
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: var(--s4);
+    padding-left: calc(var(--s3) + 28px);
+    border-left: 2px solid var(--color-border-subtle);
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  /* ── Options ── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+  }
+
+  .option-label {
+    display: block;
+    cursor: pointer;
+  }
+
+  .option-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .option-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s3);
+    padding: var(--s3) var(--s4);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+  }
+
+  .option-label:hover .option-card {
+    border-color: var(--color-border);
+    background: var(--color-surface-hover);
+  }
+
+  .option-card.selected {
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  .option-score {
+    flex-shrink: 0;
+    min-width: 28px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-dim);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 1px 6px;
+    text-align: center;
+    line-height: 1.6;
+    transition: all var(--transition-fast);
+  }
+
+  .option-card.selected .option-score {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+
+  .option-text {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    transition: color var(--transition-fast);
+  }
+
+  .option-card.selected .option-text {
+    color: var(--color-text);
+  }
+
+  /* ── Submit ── */
+  .form-actions {
+    margin-top: var(--s7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s3);
+  }
+
+  .btn-calculate {
+    padding: var(--s3) var(--s7);
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-calculate:hover:not(:disabled) {
+    background: var(--color-accent-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-calculate:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .calculate-hint {
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+  }
+
+  .privacy-note {
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+    margin-top: var(--s2);
+  }
+</style>

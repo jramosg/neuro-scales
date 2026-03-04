@@ -40,6 +40,10 @@ export type StrokeSeverity =
 
 export type GCSSeverity = 'mild' | 'moderate' | 'severe'
 
+export type FisherGrade = 0 | 1 | 2 | 3 | 4
+
+export type MarshallGrade = 1 | 2 | 3 | 4 | 5 | 6
+
 export interface ScaleResult {
   score: number
   maxScore: number
