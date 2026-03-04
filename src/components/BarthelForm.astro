@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl, useTranslations } from '../i18n/utils'
 import { barthelIndex } from '../scales/barthel'
+import FormProgressBar from './FormProgressBar.astro'
 import ScaleResultsCard from './ScaleResultsCard.astro'
 import type { LevelInfo, Zone } from './ScaleResultsCard.astro'
 
@@ -51,14 +52,11 @@ const barthelZones: Zone[] = [
 
 <div class='barthel-wrapper'>
   <form id='barthel-form' novalidate>
-    <div class='progress-bar-wrap'>
-      <p class='progress-info'>
-        <span id='progress-count'>0</span>&nbsp;{t('barthel.progress')}
-      </p>
-      <div class='progress-track'>
-        <div class='progress-fill' id='progress-fill' style='width:0%'></div>
-      </div>
-    </div>
+    <FormProgressBar
+      countId='progress-count'
+      fillId='progress-fill'
+      label={t('barthel.progress')}
+    />
 
     <div class='activities'>
       {
@@ -161,45 +159,6 @@ const barthelZones: Zone[] = [
     max-width: 720px;
     margin: 0 auto;
     padding: var(--s6) 0 var(--s4);
-  }
-
-  /* ── Progress ── */
-  .progress-bar-wrap {
-    position: sticky;
-    top: 64px;
-    z-index: 50;
-    background: var(--color-header-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--color-border-subtle);
-    padding: var(--s3) 0;
-    margin-bottom: var(--s7);
-    display: flex;
-    align-items: center;
-    gap: var(--s4);
-    transition: background var(--transition-theme);
-  }
-
-  .progress-info {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .progress-track {
-    flex: 1;
-    height: 3px;
-    background: var(--color-border);
-    border-radius: 99px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--color-teal), var(--color-accent));
-    border-radius: 99px;
-    transition: width var(--transition-med);
   }
 
   /* ── Activities ── */
