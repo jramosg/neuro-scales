@@ -10,4 +10,5 @@ export default defineConfig({
       prefixDefaultLocale: true,
     },
   },
+  site: 'https://scales.trukun.com',
 })
