@@ -44,3 +44,28 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## Deployment setup (GitHub Actions)
+
+The workflow in `.github/workflows/deploy.yml` deploys to a VPS via SSH.
+
+### Workflow triggers
+
+- **Deploy depends on CI**: Deploy is triggered only when the `CI` workflow (`.github/workflows/ci.yml`) completes successfully on the `master` branch. The `validate` job in CI runs tests and quality checks; if both pass, deploy automatically runs.
+- **Manual dispatch**: You can also manually trigger deploy via GitHub Actions UI, which bypasses CI checks.
+
+Set these repository **Secrets** in GitHub:
+
+- `VPS_HOST`: VPS hostname or IP
+- `VPS_USER`: SSH username on the VPS
+- `VPS_SSH_KEY`: private SSH key (PEM format)
+- `VPS_SSH_PORT`: SSH port
+- `APP_PORT`: external app port mapped in `docker-compose.prod.yml`
+
+Optional repository **Variable**:
+
+- `DEPLOY_ENVIRONMENT`: deployment environment name (defaults to `production`)
+
+Optional repository **Environment**:
+
+- Create an environment named `production` (or the value of `DEPLOY_ENVIRONMENT`) to add protection rules like required reviewers.
