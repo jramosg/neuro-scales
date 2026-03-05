@@ -129,15 +129,11 @@ jobs:
     steps:
       - name: Health check
         uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17 # v1.2.0
-        env:
-          IMAGE: ghcr.io/${{ github.repository }}:sha-${{ env.DEPLOY_SHA }}
-          APP_PORT: ${{ secrets.APP_PORT }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
-          envs: IMAGE,APP_PORT
           script: |
             set -e
             cd ~/neuro-scales
@@ -148,9 +144,10 @@ jobs:
             while [ $attempt -le $max_attempts ]; do
               echo "Attempt $attempt/$max_attempts - checking service..."
 
-              if docker compose -f docker-compose.prod.yml ps | grep -q "Up"; then
-                if curl -f -s -m 5 "http://localhost:${APP_PORT}/" >/dev/null 2>&1; then
-                  echo "Application is responding!"
+              HOST_PORT=$(docker compose -f docker-compose.prod.yml port nginx 80 2>/dev/null | cut -d: -f2)
+              if [ -n "$HOST_PORT" ]; then
+                if curl -f -s -L -m 5 "http://localhost:${HOST_PORT}/" >/dev/null 2>&1; then
+                  echo "Application is responding on port ${HOST_PORT}!"
                   exit 0
                 fi
               fi
