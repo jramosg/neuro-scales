@@ -1,4 +1,4 @@
-export type Langs = 'es' | 'eu'
+export type Langs = 'es' | 'eu' | 'en'
 export const defaultLang: Langs = 'es'
 
 export const ui: Record<Langs, Record<string, string>> = {
@@ -906,5 +906,450 @@ export const ui: Record<Langs, Record<string, string>> = {
     'marshall.results.range.grade_4': 'IV Gradua — Lesio difuso larria',
     'marshall.results.range.grade_5': 'V Gradua — Ebakuatutako masa',
     'marshall.results.range.grade_6': 'VI Gradua — Ebakuatu gabeko masa',
+  },
+
+  en: {
+    // Navigation
+    'nav.home': 'Home',
+    'nav.scales': 'Scales',
+
+    // Index page
+    'index.title': 'Neurological Assessment Scales',
+    'index.subtitle':
+      'Standardized clinical evaluation tools for healthcare professionals',
+    'index.select-scale': 'Select an assessment scale',
+    'index.more-scales': 'More scales coming soon',
+
+    // Barthel scale meta
+    'barthel.title': 'Barthel Index',
+    'barthel.subtitle': 'Basic activities of daily living',
+    'barthel.description':
+      'Evaluates the level of functional independence in 10 basic activities of daily living. Widely used in geriatrics, neurology and rehabilitation.',
+    'barthel.instructions':
+      "Select the option that best describes the patient's current ability in each activity. Base on behavior observed in the last 24–48 hours.",
+    'barthel.progress': 'of 10 activities assessed',
+    'barthel.calculate': 'Calculate score',
+    'barthel.calculate-hint': 'Complete all activities to calculate',
+
+    // Barthel activities
+    'barthel.feeding.label': 'Feeding',
+    'barthel.feeding.opt-10':
+      'Independent — eats without help in a reasonable time',
+    'barthel.feeding.opt-5':
+      'Needs help — cutting food, spreading butter, etc.',
+    'barthel.feeding.opt-0': 'Dependent — needs to be fed',
+
+    'barthel.bathing.label': 'Bathing / Showering',
+    'barthel.bathing.opt-5': 'Independent — bathes without help',
+    'barthel.bathing.opt-0': 'Dependent — needs help',
+
+    'barthel.grooming.label': 'Personal grooming',
+    'barthel.grooming.opt-5': 'Independent — washing face, combing, shaving',
+    'barthel.grooming.opt-0': 'Dependent — needs help',
+
+    'barthel.dressing.label': 'Dressing',
+    'barthel.dressing.opt-10':
+      'Independent — dresses and undresses without help',
+    'barthel.dressing.opt-5': 'Needs help — does at least half without help',
+    'barthel.dressing.opt-0': 'Dependent — needs total help',
+
+    'barthel.bowel.label': 'Bowel control',
+    'barthel.bowel.opt-10': 'Continent — no accidents',
+    'barthel.bowel.opt-5': 'Occasional accident — less than once a week',
+    'barthel.bowel.opt-0': 'Incontinent — or needs enema',
+
+    'barthel.bladder.label': 'Bladder control',
+    'barthel.bladder.opt-10': 'Continent — no accidents, dry day and night',
+    'barthel.bladder.opt-5': 'Occasional accident — less than once a day',
+    'barthel.bladder.opt-0': 'Incontinent — or catheterized',
+
+    'barthel.toilet.label': 'Toilet use',
+    'barthel.toilet.opt-10': 'Independent — uses toilet without help',
+    'barthel.toilet.opt-5': 'Needs help — maintains balance, cleans alone',
+    'barthel.toilet.opt-0': 'Dependent',
+
+    'barthel.transfers.label': 'Bed-chair transfer',
+    'barthel.transfers.opt-15': 'Independent — without supervision',
+    'barthel.transfers.opt-10': 'Minimal help — verbal or physical supervision',
+    'barthel.transfers.opt-5':
+      'Major help — can sit, needs assistance to transfer',
+    'barthel.transfers.opt-0': 'Dependent — cannot sit',
+
+    'barthel.mobility.label': 'Mobility',
+    'barthel.mobility.opt-15': 'Independent — walks 50m without help',
+    'barthel.mobility.opt-10': 'Needs help — physical or verbal supervision',
+    'barthel.mobility.opt-5': 'Independent in wheelchair — 50m',
+    'barthel.mobility.opt-0': 'Dependent — cannot walk',
+
+    'barthel.stairs.label': 'Stairs',
+    'barthel.stairs.opt-10': 'Independent — goes up and down without help',
+    'barthel.stairs.opt-5': 'Needs help — verbal or physical supervision',
+    'barthel.stairs.opt-0': 'Dependent — unable to climb stairs',
+
+    // Results
+    'results.title': 'Result',
+    'results.subtitle': 'Barthel Index',
+    'results.score': 'Total score',
+    'results.max': 'out of 100 points',
+    'results.interpretation': 'Clinical interpretation',
+    'results.independent': 'Independent',
+    'results.independent.desc':
+      'The person is completely independent in basic activities of daily living.',
+    'results.mild': 'Mild dependency',
+    'results.mild.desc': 'Needs minimal assistance for some daily activities.',
+    'results.moderate': 'Moderate dependency',
+    'results.moderate.desc':
+      'Requires help for several basic daily activities.',
+    'results.severe': 'Severe dependency',
+    'results.severe.desc': 'Needs considerable assistance for most activities.',
+    'results.total': 'Total dependency',
+    'results.total.desc':
+      'Requires help for all basic activities of daily living.',
+    'results.back': 'Back to home',
+    'results.retake': 'Repeat assessment',
+    'results.scale-ranges': 'Scale ranges',
+    'results.range.100': '100 — Independent',
+    'results.range.60': '60–99 — Mild dependency',
+    'results.range.40': '40–59 — Moderate dependency',
+    'results.range.20': '20–39 — Severe dependency',
+    'results.range.0': '0–19 — Total dependency',
+
+    // Footer
+    'footer.credits': 'Neurological Assessment Scales',
+    'footer.disclaimer':
+      'Professional use tool. Does not replace clinical judgment.',
+
+    // Language toggle
+    'lang.switch': 'Español',
+    'lang.current': 'English',
+
+    // NIHSS scale meta
+    'nihss.title': 'NIHSS Scale',
+    'nihss.subtitle': 'Acute ischemic stroke severity',
+    'nihss.description':
+      'Quantifies neurological deficit in acute ischemic stroke through 15 items. Guides treatment selection and predicts functional prognosis.',
+    'nihss.instructions':
+      'Score based on observed response. Do not instruct the patient. If in doubt, choose the highest score. Record 9 (N/A) for items not assessable due to amputation or inaccessibility.',
+    'nihss.progress': 'of 15 items assessed',
+    'nihss.calculate': 'Calculate NIHSS score',
+    'nihss.calculate-hint': 'Complete all items to calculate',
+
+    // 1a. Level of consciousness
+    'nihss.loc.label': '1a. Level of consciousness',
+    'nihss.loc.opt-0': 'Alert — responds appropriately',
+    'nihss.loc.opt-1': 'Drowsy — arousable with minimal stimulation',
+    'nihss.loc.opt-2': 'Stuporous — requires repeated or painful stimulation',
+    'nihss.loc.opt-3': 'Coma — reflex responses or no response',
+
+    // 1b. Verbal questions
+    'nihss.loc_questions.label': '1b. Verbal questions',
+    'nihss.loc_questions.note':
+      "Ask the month and the patient's age. Do not help with gestures.",
+    'nihss.loc_questions.opt-0': 'Answers both questions correctly',
+    'nihss.loc_questions.opt-1': 'Answers one question correctly',
+    'nihss.loc_questions.opt-2': 'Does not answer either correctly',
+
+    // 1c. Motor commands
+    'nihss.loc_commands.label': '1c. Motor commands',
+    'nihss.loc_commands.note':
+      'Instruct to open/close eyes and make a fist/open the non-paretic hand.',
+    'nihss.loc_commands.opt-0': 'Performs both commands correctly',
+    'nihss.loc_commands.opt-1': 'Performs one command correctly',
+    'nihss.loc_commands.opt-2': 'Performs neither command',
+
+    // 2. Conjugate gaze
+    'nihss.gaze.label': '2. Conjugate gaze',
+    'nihss.gaze.note':
+      'Only voluntary or reflex horizontal eye movements (oculocephalic).',
+    'nihss.gaze.opt-0': 'Normal',
+    'nihss.gaze.opt-1': 'Partial palsy — deviation or palsy but not forced',
+    'nihss.gaze.opt-2': 'Forced deviation — total palsy not overcomeable',
+
+    // 3. Visual fields
+    'nihss.visual.label': '3. Visual fields',
+    'nihss.visual.note':
+      'Visual confrontation in each quadrant. If unilateral blindness, score the healthy eye field.',
+    'nihss.visual.opt-0': 'No visual loss',
+    'nihss.visual.opt-1': 'Partial hemianopia',
+    'nihss.visual.opt-2': 'Complete hemianopia',
+    'nihss.visual.opt-3': 'Bilateral hemianopia / cortical blindness',
+
+    // 4. Facial palsy
+    'nihss.facial_palsy.label': '4. Facial palsy',
+    'nihss.facial_palsy.opt-0': 'Normal — symmetrical movements',
+    'nihss.facial_palsy.opt-1':
+      'Minor palsy — asymmetry on smile, flattened nasolabial fold',
+    'nihss.facial_palsy.opt-2':
+      'Partial palsy — complete paralysis of lower hemiface',
+    'nihss.facial_palsy.opt-3': 'Complete paralysis — upper and lower',
+
+    // 5a/5b. Upper extremities
+    'nihss.arm_right.label': '5a. Right upper extremity',
+    'nihss.arm_left.label': '5b. Left upper extremity',
+    'nihss.upper_limbs.note':
+      'Maintain arm extended at 90° (sitting) or 45° (supine) for 10 s. Record N/A if amputation or other cause.',
+    'nihss.arm.opt-0': 'No drift — holds position 10 s',
+    'nihss.arm.opt-1': 'Drift — drifts before 10 s, does not hit bed',
+    'nihss.arm.opt-2': 'Some effort against gravity — drifts to bed',
+    'nihss.arm.opt-3': 'No effort against gravity — falls, can move',
+    'nihss.arm.opt-4': 'No movement',
+
+    // 6a/6b. Lower extremities
+    'nihss.leg_right.label': '6a. Right lower extremity',
+    'nihss.leg_left.label': '6b. Left lower extremity',
+    'nihss.lower_limbs.note':
+      'Maintain leg extended at 30° supine for 5 s. Record N/A if amputation or other cause.',
+    'nihss.leg.opt-0': 'No drift — holds position 5 s',
+    'nihss.leg.opt-1': 'Drift — drifts before 5 s, does not hit bed',
+    'nihss.leg.opt-2': 'Some effort against gravity — drifts to bed',
+    'nihss.leg.opt-3': 'No effort against gravity — falls, can move',
+    'nihss.leg.opt-4': 'No movement',
+
+    // N/A shared (limbs)
+    'nihss.limb.opt-9': 'N/A — amputation or arthrodesis',
+
+    // 7. Ataxia
+    'nihss.ataxia.label': '7. Limb ataxia',
+    'nihss.ataxia.note':
+      'Finger-nose and heel-shin test. Score only if disproportionate to paresis.',
+    'nihss.ataxia.opt-0': 'Absent',
+    'nihss.ataxia.opt-1': 'Present in one limb',
+    'nihss.ataxia.opt-2': 'Present in two limbs',
+
+    // 8. Sensory
+    'nihss.sensory.label': '8. Sensory',
+    'nihss.sensory.note':
+      'Evaluate with pin. Only severe defect or hemihypesthesia scorable if altered consciousness.',
+    'nihss.sensory.opt-0': 'Normal — no sensory loss',
+    'nihss.sensory.opt-1': 'Mild-moderate — hypesthesia, but aware of touch',
+    'nihss.sensory.opt-2':
+      'Severe or total — does not recognize touch in face, arm and leg',
+
+    // 9. Language
+    'nihss.language.label': '9. Language / Aphasia',
+    'nihss.language.note':
+      'Description of picture, object naming and reading standard sentences.',
+    'nihss.language.opt-0': 'Normal — no aphasia',
+    'nihss.language.opt-1':
+      'Mild-moderate aphasia — communication possible with difficulty',
+    'nihss.language.opt-2': 'Severe aphasia — fragmented communication',
+    'nihss.language.opt-3': 'Mutism / global aphasia',
+
+    // 10. Dysarthria
+    'nihss.dysarthria.label': '10. Dysarthria',
+    'nihss.dysarthria.note':
+      'Read or repeat words from the standard list. Record N/A if intubated or other cause.',
+    'nihss.dysarthria.opt-0': 'Normal',
+    'nihss.dysarthria.opt-1':
+      'Mild-moderate — speaks with difficulty but understandable',
+    'nihss.dysarthria.opt-2': 'Severe — speech unintelligible or anarthria',
+    'nihss.dysarthria.opt-9': 'N/A — intubated or other cause',
+
+    // 11. Extinction / Neglect
+    'nihss.neglect.label': '11. Extinction / Neglect',
+    'nihss.neglect.note':
+      'Simultaneous bilateral stimulation. Also evaluate visual and spatial neglect.',
+    'nihss.neglect.opt-0': 'No abnormality',
+    'nihss.neglect.opt-1': 'Inattention or extinction in one modality',
+    'nihss.neglect.opt-2':
+      'Profound hemi-inattention in more than one modality',
+
+    // NIHSS result levels
+    'nihss.result.normal': 'No deficit',
+    'nihss.result.normal.desc':
+      'Neurological examination without evident deficit. Monitor closely for possible fluctuation.',
+    'nihss.result.mild': 'Minor stroke',
+    'nihss.result.mild.desc':
+      'Minimal neurological deficit. Potential candidate for thrombolytic treatment if criteria met.',
+    'nihss.result.moderate': 'Moderate stroke',
+    'nihss.result.moderate.desc':
+      'Significant neurological deficit. Evaluate eligibility for i.v. thrombolysis or mechanical thrombectomy.',
+    'nihss.result.moderate_severe': 'Moderate-severe stroke',
+    'nihss.result.moderate_severe.desc':
+      'Severe deficit with significant functional compromise. Consider mechanical thrombectomy if large vessel occlusion.',
+    'nihss.result.severe': 'Severe stroke',
+    'nihss.result.severe.desc':
+      'Severe neurological deficit. Prioritize urgent intervention and intensive monitoring.',
+
+    // NIHSS results display
+    'nihss.results.max': 'out of 42 points',
+    'nihss.results.score': 'NIHSS Score',
+    'nihss.results.ranges': 'Severity ranges',
+    'nihss.results.range.normal': '0 — No deficit',
+    'nihss.results.range.mild': '1–4 — Minor stroke',
+    'nihss.results.range.moderate': '5–15 — Moderate stroke',
+    'nihss.results.range.moderate_severe': '16–20 — Moderate-severe stroke',
+    'nihss.results.range.severe': '21–42 — Severe stroke',
+    'form.privacy': 'Data is processed locally and not stored.',
+
+    // Theme
+    'theme.toggle': 'Toggle theme',
+    'footer.privacy': 'Data is processed locally and not stored.',
+
+    // GCS scale meta
+    'gcs.title': 'Glasgow Coma Scale',
+    'gcs.subtitle': 'Level of consciousness assessment',
+    'gcs.description':
+      'Quantifies level of consciousness through 3 items (eye opening, verbal and motor response). Classifies coma as mild (13–15), moderate (9–12) and severe (3–8).',
+    'gcs.instructions':
+      'Select the best response observed in each category. Lower score indicates deeper coma.',
+    'gcs.progress': 'of 3 items assessed',
+    'gcs.calculate': 'Calculate GCS score',
+    'gcs.calculate-hint': 'Complete all 3 categories to calculate',
+
+    // 1. Eye opening
+    'gcs.eye_opening.label': '1. Eye opening',
+    'gcs.eye_opening.opt-4': 'Spontaneous',
+    'gcs.eye_opening.opt-3': 'To verbal command',
+    'gcs.eye_opening.opt-2': 'To pain',
+    'gcs.eye_opening.opt-1': 'None',
+
+    // 2. Verbal response
+    'gcs.verbal.label': '2. Verbal response',
+    'gcs.verbal.opt-5': 'Oriented',
+    'gcs.verbal.opt-4': 'Confused',
+    'gcs.verbal.opt-3': 'Inappropriate words',
+    'gcs.verbal.opt-2': 'Incomprehensible sounds',
+    'gcs.verbal.opt-1': 'None',
+
+    // 3. Best motor response
+    'gcs.motor.label': '3. Best motor response',
+    'gcs.motor.opt-6': 'Obeys commands',
+    'gcs.motor.opt-5': 'Localizes pain',
+    'gcs.motor.opt-4': 'Withdraws to pain',
+    'gcs.motor.opt-3': 'Abnormal flexion',
+    'gcs.motor.opt-2': 'Extension response',
+    'gcs.motor.opt-1': 'No movement',
+
+    // GCS result levels
+    'gcs.result.mild': 'Mild coma',
+    'gcs.result.mild.desc':
+      'Consciousness preserved or minimally altered. Monitor closely for possible neurological deterioration.',
+    'gcs.result.moderate': 'Moderate coma',
+    'gcs.result.moderate.desc':
+      'Significant alteration of consciousness level. Requires intensive monitoring and urgent neurological evaluation.',
+    'gcs.result.severe': 'Severe coma',
+    'gcs.result.severe.desc':
+      'Profound alteration of consciousness level. Prioritize life support and management in intensive care unit.',
+
+    // GCS results display
+    'gcs.results.max': 'out of 15 points',
+    'gcs.results.score': 'GCS Score',
+    'gcs.results.ranges': 'Severity ranges',
+    'gcs.results.range.mild': '13–15 — Mild coma',
+    'gcs.results.range.moderate': '9–12 — Moderate coma',
+    'gcs.results.range.severe': '3–8 — Severe coma',
+
+    // Modified Fisher scale meta
+    'fisher.title': 'Modified Fisher Scale',
+    'fisher.subtitle': 'Subarachnoid hemorrhage — vasospasm risk',
+    'fisher.description':
+      'Classifies subarachnoid hemorrhage (SAH) on cranial CT according to hemorrhagic distribution, clot formation and presence of intraventricular bleeding. Predicts risk of cerebral vasospasm and delayed ischemia.',
+    'fisher.instructions':
+      'Review the cranial CT and select the grade that best describes the findings. Clot formation (>1 mm in coronal plane or >3×5 mm in axial plane) and/or intraventricular bleeding determine the risk grade.',
+    'fisher.progress': 'of 1 item assessed',
+    'fisher.calculate': 'Classify Fisher grade',
+    'fisher.calculate-hint': 'Select the grade corresponding to the CT',
+
+    // Fisher grade activity
+    'fisher.grade.label': 'Modified Fisher Grade',
+    'fisher.grade.note':
+      'Evaluate: (1) presence of SAH, (2) dense clot formation >1 mm in coronal plane or >3×5 mm in axial plane, (3) intraventricular bleeding.',
+    'fisher.grade.opt-0':
+      'Grade 0 — No subarachnoid or intraventricular hemorrhage',
+    'fisher.grade.opt-1':
+      'Grade I — Focal or diffuse SAH, no clots and no intraventricular hemorrhage. Low vasospasm risk.',
+    'fisher.grade.opt-2':
+      'Grade II — Focal or diffuse SAH, no clots, with intraventricular hemorrhage. Intermediate vasospasm risk.',
+    'fisher.grade.opt-3':
+      'Grade III — Focal or diffuse SAH, with clots, no intraventricular hemorrhage. Intermediate vasospasm risk.',
+    'fisher.grade.opt-4':
+      'Grade IV — Focal or diffuse SAH, with clots and intraventricular hemorrhage. High vasospasm risk.',
+
+    // Fisher result levels
+    'fisher.result.grade_0': 'Modified Fisher — Grade 0',
+    'fisher.result.grade_0.desc':
+      'No subarachnoid or intraventricular hemorrhage. Very low risk of cerebral vasospasm.',
+    'fisher.result.grade_1': 'Modified Fisher — Grade I',
+    'fisher.result.grade_1.desc':
+      'Focal or diffuse SAH without clots or intraventricular hemorrhage. Low risk of symptomatic vasospasm.',
+    'fisher.result.grade_2': 'Modified Fisher — Grade II',
+    'fisher.result.grade_2.desc':
+      'SAH without clots but with intraventricular hemorrhage. Intermediate risk of delayed cerebral ischemia from vasospasm.',
+    'fisher.result.grade_3': 'Modified Fisher — Grade III',
+    'fisher.result.grade_3.desc':
+      'SAH with clots without intraventricular hemorrhage. Intermediate risk of delayed cerebral ischemia from vasospasm.',
+    'fisher.result.grade_4': 'Modified Fisher — Grade IV',
+    'fisher.result.grade_4.desc':
+      'SAH with clots and intraventricular hemorrhage. High risk of symptomatic vasospasm and delayed cerebral ischemia.',
+
+    // Fisher results display
+    'fisher.results.max': 'out of 4 (maximum grade)',
+    'fisher.results.score': 'Modified Fisher Grade',
+    'fisher.results.ranges': 'Vasospasm risk',
+    'fisher.results.range.grade_0': 'Grade 0 — No SAH',
+    'fisher.results.range.grade_1': 'Grade I — Low risk',
+    'fisher.results.range.grade_2': 'Grade II — Intermediate risk',
+    'fisher.results.range.grade_3': 'Grade III — Intermediate risk',
+    'fisher.results.range.grade_4': 'Grade IV — High risk',
+
+    // Marshall scale meta
+    'marshall.title': 'Marshall Scale',
+    'marshall.subtitle': 'Radiological TBI classification',
+    'marshall.description':
+      'Classifies traumatic brain injury (TBI) according to findings on cranial CT, relating the injury pattern to risk of intracranial hypertension and associated morbidity and mortality. Scale created in 1991.',
+    'marshall.instructions':
+      'Review the cranial CT and select the grade that best describes the findings. Evaluate: presence of focal lesions, lesion volume, status of basal cisterns and midline shift.',
+    'marshall.progress': 'of 1 item assessed',
+    'marshall.calculate': 'Classify Marshall grade',
+    'marshall.calculate-hint': 'Select the grade corresponding to the CT',
+
+    // Marshall grade activity
+    'marshall.grade.label': 'Marshall Grade',
+    'marshall.grade.note':
+      'Evaluate on CT: (1) presence of hyperdense focal lesions, (2) lesion volume (<25 cc or >25 cc), (3) basal cisterns (preserved / compressed), (4) midline shift (>5 mm), (5) whether the lesion was surgically evacuated.',
+    'marshall.grade.opt-1':
+      'Grade I (diffuse injury I) — No visible intracranial pathology on CT',
+    'marshall.grade.opt-2':
+      'Grade II (diffuse injury II) — Hyperdense focal lesion(s) <25 cc; basal cisterns preserved; no midline shift >5 mm',
+    'marshall.grade.opt-3':
+      'Grade III (diffuse injury III) — Hyperdense focal lesion(s) <25 cc; basal cisterns collapsed or compressed; no midline shift >5 mm',
+    'marshall.grade.opt-4':
+      'Grade IV (diffuse injury IV) — Hyperdense focal lesion(s) <25 cc; with midline shift >5 mm',
+    'marshall.grade.opt-5':
+      'Grade V (evacuated mass) — Any surgically evacuated traumatic lesion',
+    'marshall.grade.opt-6':
+      'Grade VI (non-evacuated mass) — Hyperdense focal lesion(s) with volume >25 cc not evacuated',
+
+    // Marshall result levels
+    'marshall.result.grade_1': 'Marshall Grade I',
+    'marshall.result.grade_1.desc':
+      'No visible intracranial pathology. Lower risk of intracranial hypertension in the context of TBI.',
+    'marshall.result.grade_2': 'Marshall Grade II',
+    'marshall.result.grade_2.desc':
+      'Mild diffuse injury. Preserved basal cisterns without significant midline shift.',
+    'marshall.result.grade_3': 'Marshall Grade III',
+    'marshall.result.grade_3.desc':
+      'Moderate diffuse injury. Basal cistern compression with elevated risk of intracranial hypertension.',
+    'marshall.result.grade_4': 'Marshall Grade IV',
+    'marshall.result.grade_4.desc':
+      'Severe diffuse injury. Midline shift indicative of significant mass effect with high risk of herniation.',
+    'marshall.result.grade_5': 'Marshall Grade V',
+    'marshall.result.grade_5.desc':
+      'Surgically evacuated lesion. Concomitant traumatic SAH is an aggravating prognostic factor.',
+    'marshall.result.grade_6': 'Marshall Grade VI',
+    'marshall.result.grade_6.desc':
+      'Non-evacuated large volume mass (>25 cc). High risk of cerebral herniation and elevated mortality.',
+
+    // Marshall results display
+    'marshall.results.max': 'out of 6 (maximum grade)',
+    'marshall.results.score': 'Marshall Grade',
+    'marshall.results.ranges': 'Injury classification',
+    'marshall.results.range.grade_1': 'Grade I — No visible pathology',
+    'marshall.results.range.grade_2': 'Grade II — Mild diffuse injury',
+    'marshall.results.range.grade_3': 'Grade III — Moderate diffuse injury',
+    'marshall.results.range.grade_4': 'Grade IV — Severe diffuse injury',
+    'marshall.results.range.grade_5': 'Grade V — Evacuated mass',
+    'marshall.results.range.grade_6': 'Grade VI — Non-evacuated mass',
   },
 }

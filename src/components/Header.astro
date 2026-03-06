@@ -1,10 +1,16 @@
 ---
-import { getLangFromUrl, useTranslations, switchLanguage } from '../i18n/utils'
+import { getLangFromUrl, useTranslations, getLanguageUrls } from '../i18n/utils'
 import ThemeToggle from './ThemeToggle.astro'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
-const altLangUrl = switchLanguage(Astro.url)
+const langUrls = getLanguageUrls(Astro.url)
+
+const langLabels: Record<string, { code: string; native: string }> = {
+  es: { code: 'ES', native: 'Castellano' },
+  eu: { code: 'EU', native: 'Euskara' },
+  en: { code: 'EN', native: 'English' },
+}
 ---
 
 <header>
@@ -37,10 +43,20 @@ const altLangUrl = switchLanguage(Astro.url)
     <div class='controls'>
       <ThemeToggle />
 
-      <a href={altLangUrl} class='lang-toggle' aria-label={t('lang.switch')}>
-        <span class='lang-badge'>{lang === 'es' ? 'ES' : 'EU'}</span>
-        <span class='lang-label'>{t('lang.switch')}</span>
-      </a>
+      <div class='lang-switcher' role='navigation' aria-label='Language'>
+        {
+          (['es', 'eu', 'en'] as const).map((l) => (
+            <a
+              href={langUrls[l]}
+              class:list={['lang-pill', { active: l === lang }]}
+              aria-current={l === lang ? 'page' : undefined}
+              aria-label={langLabels[l].native}
+            >
+              {langLabels[l].code}
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
 </header>
@@ -124,45 +140,49 @@ const altLangUrl = switchLanguage(Astro.url)
     flex-wrap: nowrap;
   }
 
-  .lang-toggle {
+  .lang-switcher {
     display: flex;
     align-items: center;
-    gap: var(--s2);
-    padding: var(--s1) var(--s3);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    color: var(--color-text-muted);
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    transition: all var(--transition-fast);
-    background: transparent;
-    height: 34px;
+    overflow: hidden;
     flex-shrink: 0;
+    height: 30px;
+    transition: border-color var(--transition-fast);
   }
 
-  .lang-toggle:hover {
+  .lang-switcher:hover {
     border-color: var(--color-teal);
+  }
+
+  .lang-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    height: 100%;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-text-dim);
+    background: transparent;
+    transition: all var(--transition-fast);
+    border-right: 1px solid var(--color-border);
+    white-space: nowrap;
+  }
+
+  .lang-pill:last-child {
+    border-right: none;
+  }
+
+  .lang-pill:hover:not(.active) {
     color: var(--color-teal-light);
     background: var(--color-teal-dim);
   }
 
-  .lang-badge {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    background: var(--color-surface-raised);
-    padding: 1px 5px;
-    border-radius: var(--radius-sm);
-  }
-
-  .lang-label {
-    display: none;
-  }
-
-  @media (min-width: 500px) {
-    .lang-label {
-      display: inline;
-    }
+  .lang-pill.active {
+    background: var(--color-teal);
+    color: var(--color-on-primary);
+    cursor: default;
   }
 </style>

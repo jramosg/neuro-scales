@@ -1,7 +1,5 @@
 import { ui, defaultLang, type Langs } from './ui'
 
-const newLangMap: Record<Langs, Langs> = { es: 'eu', eu: 'es' }
-
 export function getLangFromUrl(url: URL): Langs {
   const [, lang] = url.pathname.split('/')
   if (lang in ui) return lang as Langs
@@ -18,14 +16,19 @@ export function getStaticLangPaths(): { params: { lang: Langs } }[] {
   return (Object.keys(ui) as Langs[]).map((lang) => ({ params: { lang } }))
 }
 
-export function switchLanguage(url: URL): string {
+export function getLanguageUrls(url: URL): Record<Langs, string> {
   const pathParts = url.pathname.split('/')
-  const [, lang] = pathParts
-  const newLang = newLangMap[lang as Langs]
-  if (newLang && newLang in ui) {
-    pathParts[1] = newLang
-  } else {
-    pathParts.splice(1, 0, newLang ?? defaultLang)
-  }
-  return pathParts.join('/')
+  return (Object.keys(ui) as Langs[]).reduce(
+    (acc, lang) => {
+      const parts = [...pathParts]
+      if (parts[1] && parts[1] in ui) {
+        parts[1] = lang
+      } else {
+        parts.splice(1, 0, lang)
+      }
+      acc[lang] = parts.join('/')
+      return acc
+    },
+    {} as Record<Langs, string>
+  )
 }

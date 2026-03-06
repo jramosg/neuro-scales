@@ -19,6 +19,7 @@
   --color-teal: #1d7070;
   --color-teal-light: #238686;
   --color-teal-dim: rgba(29, 112, 112, 0.1);
+  --color-on-primary: #ffffff;
   --color-border: #ddd6ca;
   --color-border-subtle: #e8e2d8;
 
@@ -79,6 +80,7 @@
   --color-teal: #2e8b8b;
   --color-teal-light: #4aadad;
   --color-teal-dim: rgba(46, 139, 139, 0.12);
+  --color-on-primary: #ffffff;
   --color-border: #1e2535;
   --color-border-subtle: #161c28;
 
