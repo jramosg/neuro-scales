@@ -14,5 +14,16 @@ export default defineConfig({
   },
 
   site: 'https://scales.trukun.com',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'es',
+        locales: {
+          es: 'es-ES',
+          eu: 'eu',
+          en: 'en-US',
+        },
+      },
+    }),
+  ],
 })
