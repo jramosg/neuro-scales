@@ -136,7 +136,6 @@ jobs:
           port: ${{ secrets.VPS_SSH_PORT }}
           script: |
             set -e
-            cd ~/neuro-scales
 
             max_attempts=12
             attempt=1
@@ -144,22 +143,13 @@ jobs:
             while [ $attempt -le $max_attempts ]; do
               echo "Attempt $attempt/$max_attempts - checking service..."
 
-              HOST_PORT=$(docker compose -f docker-compose.prod.yml port nginx 80 2>/dev/null | cut -d: -f2)
-              if [ -n "$HOST_PORT" ]; then
-                if curl -f -s -L -m 5 "http://localhost:${HOST_PORT}/" >/dev/null 2>&1; then
-                  echo "Application is responding on port ${HOST_PORT}!"
-                  exit 0
-                fi
+              if curl -f -s -L -m 5 "https://scales.trukun.com/" >/dev/null 2>&1; then
+                echo "Application is healthy!"
+                exit 0
               fi
 
               if [ $attempt -eq $max_attempts ]; then
                 echo "Health check failed after $max_attempts attempts"
-                echo ""
-                echo "Container status:"
-                docker compose -f docker-compose.prod.yml ps
-                echo ""
-                echo "Logs:"
-                docker compose -f docker-compose.prod.yml logs --tail=30
                 exit 1
               fi
 
