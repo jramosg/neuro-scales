@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <defs>
+    <linearGradient id="tealGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#238686"/>
+      <stop offset="100%" stop-color="#1d7070"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4913a"/>
+      <stop offset="100%" stop-color="#a8682a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Gauge arc (semicircle) -->
+  <path d="M40 160 A80 80 0 0 1 200 160" stroke="url(#tealGrad)" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- Gauge tick marks -->
+  <line x1="44" y1="148" x2="54" y2="152" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="56" y1="118" x2="65" y2="124" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="80" y1="94" x2="87" y2="102" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="113" y1="82" x2="116" y2="92" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="148" y1="82" x2="148" y2="92" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="178" y1="96" x2="172" y2="104" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="196" y1="120" x2="187" y2="126" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="204" y1="148" x2="194" y2="152" stroke="#1d7070" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Gauge needle pointing to moderate zone -->
+  <line x1="120" y1="158" x2="82" y2="108" stroke="url(#amberGrad)" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="120" cy="158" r="6" fill="#a8682a"/>
+
+  <!-- Brain hemisphere (left) — stylized neural folds -->
+  <g stroke="#1d7070" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85">
+    <!-- Outer cortex shape -->
+    <path d="M120 38 C88 38 62 52 52 72 C42 92 44 118 52 136"/>
+    <!-- Central sulcus -->
+    <path d="M120 42 C108 58 96 74 92 96"/>
+    <!-- Frontal fold -->
+    <path d="M82 52 C74 64 70 80 74 96"/>
+    <!-- Temporal fold -->
+    <path d="M58 86 C64 96 62 112 56 128"/>
+    <!-- Parietal connection -->
+    <path d="M104 48 C98 62 100 82 108 96"/>
+  </g>
+
+  <!-- Brain hemisphere (right) — stylized neural folds -->
+  <g stroke="#1d7070" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85">
+    <path d="M120 38 C152 38 178 52 188 72 C198 92 196 118 188 136"/>
+    <path d="M120 42 C132 58 144 74 148 96"/>
+    <path d="M158 52 C166 64 170 80 166 96"/>
+    <path d="M182 86 C176 96 178 112 184 128"/>
+    <path d="M136 48 C142 62 140 82 132 96"/>
+  </g>
+
+  <!-- Neural dots / synapses -->
+  <circle cx="92" cy="96" r="3" fill="#a8682a" opacity="0.8"/>
+  <circle cx="148" cy="96" r="3" fill="#a8682a" opacity="0.8"/>
+  <circle cx="108" cy="96" r="3" fill="#a8682a" opacity="0.6"/>
+  <circle cx="132" cy="96" r="3" fill="#a8682a" opacity="0.6"/>
+  <circle cx="120" cy="42" r="3.5" fill="#1d7070"/>
+  <circle cx="74" cy="96" r="2.5" fill="#1d7070" opacity="0.5"/>
+  <circle cx="166" cy="96" r="2.5" fill="#1d7070" opacity="0.5"/>
+
+  <!-- Neural pathway sparks descending to gauge -->
+  <circle cx="100" cy="120" r="1.8" fill="#a8682a" opacity="0.4"/>
+  <circle cx="140" cy="118" r="1.8" fill="#a8682a" opacity="0.4"/>
+  <circle cx="112" cy="132" r="2" fill="#a8682a" opacity="0.3"/>
+  <circle cx="130" cy="130" r="2" fill="#a8682a" opacity="0.3"/>
+</svg>
