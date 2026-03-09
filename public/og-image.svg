@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0f15"/>
+      <stop offset="50%" stop-color="#111724"/>
+      <stop offset="100%" stop-color="#0c0f15"/>
+    </linearGradient>
+    <linearGradient id="tealG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3cb0b0"/>
+      <stop offset="100%" stop-color="#1d7070"/>
+    </linearGradient>
+    <linearGradient id="amberG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8a84f"/>
+      <stop offset="100%" stop-color="#a8682a"/>
+    </linearGradient>
+    <radialGradient id="glowTeal" cx="0.3" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="rgba(29, 112, 112, 0.15)"/>
+      <stop offset="100%" stop-color="rgba(29, 112, 112, 0)"/>
+    </radialGradient>
+    <radialGradient id="glowAmber" cx="0.7" cy="0.6" r="0.4">
+      <stop offset="0%" stop-color="rgba(168, 104, 42, 0.1)"/>
+      <stop offset="100%" stop-color="rgba(168, 104, 42, 0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#glowTeal)"/>
+  <rect width="1200" height="630" fill="url(#glowAmber)"/>
+
+  <!-- Subtle grid pattern -->
+  <g stroke="rgba(58, 176, 176, 0.04)" stroke-width="0.5">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- ═══ Logo mark (left side) ═══ -->
+  <g transform="translate(120, 100) scale(1.8)">
+    <!-- Gauge arc -->
+    <path d="M40 160 A80 80 0 0 1 200 160" stroke="url(#tealG)" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+    <!-- Gauge ticks -->
+    <line x1="44" y1="148" x2="54" y2="152" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="56" y1="118" x2="65" y2="124" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="80" y1="94" x2="87" y2="102" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="113" y1="82" x2="116" y2="92" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="148" y1="82" x2="148" y2="92" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="178" y1="96" x2="172" y2="104" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="196" y1="120" x2="187" y2="126" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+    <line x1="204" y1="148" x2="194" y2="152" stroke="#3cb0b0" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Needle -->
+    <line x1="120" y1="158" x2="82" y2="108" stroke="url(#amberG)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="120" cy="158" r="5" fill="#d4913a"/>
+
+    <!-- Brain left hemisphere -->
+    <g stroke="#3cb0b0" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8">
+      <path d="M120 38 C88 38 62 52 52 72 C42 92 44 118 52 136"/>
+      <path d="M120 42 C108 58 96 74 92 96"/>
+      <path d="M82 52 C74 64 70 80 74 96"/>
+      <path d="M58 86 C64 96 62 112 56 128"/>
+      <path d="M104 48 C98 62 100 82 108 96"/>
+    </g>
+
+    <!-- Brain right hemisphere -->
+    <g stroke="#3cb0b0" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8">
+      <path d="M120 38 C152 38 178 52 188 72 C198 92 196 118 188 136"/>
+      <path d="M120 42 C132 58 144 74 148 96"/>
+      <path d="M158 52 C166 64 170 80 166 96"/>
+      <path d="M182 86 C176 96 178 112 184 128"/>
+      <path d="M136 48 C142 62 140 82 132 96"/>
+    </g>
+
+    <!-- Synapse dots -->
+    <circle cx="92" cy="96" r="3" fill="#d4913a" opacity="0.8"/>
+    <circle cx="148" cy="96" r="3" fill="#d4913a" opacity="0.8"/>
+    <circle cx="108" cy="96" r="2.5" fill="#d4913a" opacity="0.5"/>
+    <circle cx="132" cy="96" r="2.5" fill="#d4913a" opacity="0.5"/>
+    <circle cx="120" cy="42" r="3.5" fill="#3cb0b0"/>
+    <circle cx="74" cy="96" r="2" fill="#3cb0b0" opacity="0.5"/>
+    <circle cx="166" cy="96" r="2" fill="#3cb0b0" opacity="0.5"/>
+  </g>
+
+  <!-- ═══ Text content (right side) ═══ -->
+
+  <!-- Site name -->
+  <text x="680" y="240" font-family="Georgia, 'Palatino Linotype', serif" font-size="72" fill="#e8e4dc" font-weight="400" letter-spacing="-1">NeuroScales</text>
+
+  <!-- Tagline -->
+  <text x="684" y="300" font-family="'Segoe UI', system-ui, sans-serif" font-size="28" fill="#3cb0b0" letter-spacing="3" font-weight="400">ESCALAS DE NEUROLOGIA</text>
+
+  <!-- Description -->
+  <text x="684" y="370" font-family="'Segoe UI', system-ui, sans-serif" font-size="22" fill="#7a8296" letter-spacing="0.5">Escalas de valoracion neurologica</text>
+  <text x="684" y="402" font-family="'Segoe UI', system-ui, sans-serif" font-size="22" fill="#7a8296" letter-spacing="0.5">para la practica clinica</text>
+
+  <!-- Accent bar -->
+  <rect x="680" y="435" width="60" height="3" rx="1.5" fill="#d4913a"/>
+
+  <!-- Scale badges -->
+  <g transform="translate(680, 468)">
+    <rect x="0" y="0" width="100" height="36" rx="8" fill="rgba(29, 112, 112, 0.2)" stroke="#1d7070" stroke-width="1"/>
+    <text x="50" y="23" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" fill="#3cb0b0" text-anchor="middle" letter-spacing="1">BARTHEL</text>
+
+    <rect x="120" y="0" width="88" height="36" rx="8" fill="rgba(29, 112, 112, 0.2)" stroke="#1d7070" stroke-width="1"/>
+    <text x="164" y="23" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" fill="#3cb0b0" text-anchor="middle" letter-spacing="1">NIHSS</text>
+  </g>
+
+  <!-- Border frame -->
+  <rect x="16" y="16" width="1168" height="598" rx="4" fill="none" stroke="rgba(58, 176, 176, 0.1)" stroke-width="1"/>
+
+  <!-- Domain -->
+  <text x="1080" y="590" font-family="'Segoe UI', system-ui, sans-serif" font-size="16" fill="#4a5268" text-anchor="end" letter-spacing="1">scales.trukun.com</text>
+</svg>
